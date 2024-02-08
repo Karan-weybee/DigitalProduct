@@ -7,15 +7,18 @@ import LoginModal from "./components/LoginModal";
 import AdminProduct from "./components/AdminProducts/AdminProduct";
 import AdminModal from "./components/AdminProductDetails/AdminModal";
 import AddProduct from "./components/Product/AddProduct";
+// import EditProduct from "./components/Product/EditProduct";
 
 function App() {
   return (
     <>
       <Header />
-      {/* <Content /> */}
+     
       <AdminProduct/>
       <AdminModal/>
       <AddProduct/>
+
+ {/* <Content /> */}
       <Modal />
       <LoginModal />
     </>

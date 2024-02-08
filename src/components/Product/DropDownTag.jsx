@@ -48,7 +48,7 @@ const DropDownTag = ({selectedOptions,setSelectedOptions}) => {
                        onInputChange={handleInputChange}
                        onKeyDown={handleCreateOption}
                          placeholder="Tags"
-                     isClearable
+                       isClearable
                       closeMenuOnSelect={false}
                      />
         </div>

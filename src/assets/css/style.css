@@ -10689,3 +10689,27 @@ a.close-modal {
   top: 0%;
   z-index: 12;
 }
+.custom-file-input {
+  margin-top: 1.5em;
+  position: relative;
+  display: inline-block;
+}
+
+.custom-file-input input[type="file"] {
+  position: absolute;
+  left: -9999px; /* Hide the default file input */
+}
+
+.custom-file-input label {
+  background-color: green;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Optional: Add hover and focus styles */
+.custom-file-input label:hover,
+.custom-file-input label:focus {
+  background-color: green;
+}

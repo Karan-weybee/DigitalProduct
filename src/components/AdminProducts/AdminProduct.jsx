@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from "react";
 import Footer from '../Footer/Footer'
 import { useSelector,useDispatch } from "react-redux";
-import { fetchProducts } from "../../slices/productSlice";
+import { fetchProduct, fetchProducts } from "../../slices/productSlice";
 
 const AdminProduct = () => {
     const dispatch = useDispatch();
@@ -13,7 +13,7 @@ const AdminProduct = () => {
     },[])
 
   const showProductDetails = () => {
-    console.log("hello")
+    dispatch(fetchProduct(2))
     document.getElementById("adminProductDetails").style.display ='block';
   };
  
@@ -22,6 +22,10 @@ const AdminProduct = () => {
     document.getElementById("ProductAdd").style.display ='block';
   }
 
+  const openEditProduct = ()=>{
+ 
+    document.getElementById("ProductEdit").style.display ='block';
+  }
   return (
     <>
      <div className="shop">
@@ -74,9 +78,9 @@ const AdminProduct = () => {
                             <div className="product-btn">
                               <a
                                 className="btn -white product__actions__item -round product-atc"
-                                href="#"
+                                onClick={openEditProduct}
                               >
-                                <i className="fas fa-pencil-alt"></i>
+                                <i className="fas fa-eye"></i>
                               </a>
                             </div>
                             <div className="product-btn">
@@ -84,7 +88,7 @@ const AdminProduct = () => {
                                 className="btn -white product__actions__item -round product-qv"
                                 onClick={showProductDetails}
                               >
-                                <i className="fas fa-eye"></i>
+                                <i className="fas fa-pencil-alt "></i>
                               </a>
                             </div>
                             <div className="product-btn">

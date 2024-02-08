@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DropDownTag from "./DropDownTag";
 import { useDispatch,useSelector} from "react-redux";
 import { fetchProducts } from "../../slices/productSlice";
@@ -6,9 +6,13 @@ import { fetchProducts } from "../../slices/productSlice";
 const AddProduct = () => {
     const dispatch = useDispatch();
 
-  const closeLoginModal = () => {
+  const closeAddProduct = () => {
     document.getElementById("ProductAdd").style.display = "none";
   };
+
+  useEffect(()=>{
+    
+  },[])
 
   const [selectedOptions, setSelectedOptions] = useState();
   const [name, setName] = useState("");
@@ -69,7 +73,7 @@ const AddProduct = () => {
                 rel="modal:close"
                 class="close-modal "
                 style={{ top: "9.5px", right: "11.5px" }}
-                onClick={closeLoginModal}
+                onClick={closeAddProduct}
               >
                 Close
               </a>
@@ -87,7 +91,7 @@ const AddProduct = () => {
                     />
                   </div>
                 
-                    <div>
+                  <div>
                 <form className="cta__form__detail validated-form" id="myForm" onSubmit={handleSubmit}>
                       <div className="input-validator">
                       <label htmlFor="" style={{display:'block',marginBottom:'10px'}}> Name :</label>
@@ -160,7 +164,7 @@ const AddProduct = () => {
                       <button
                       id="formSubmit"
                       type="submit"
-                        style={{ margin: "0 10px 10px 0" }}
+                        style={{ margin: "0 10px 10px 0" ,background:'#198754',color:'white'}}
                         className="btn btn-light-success"
                       >
                         Submit
