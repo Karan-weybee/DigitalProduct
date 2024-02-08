@@ -31,6 +31,11 @@ const AdminModal = () => {
  
   const [multipleProductImage,setMultipleProductImage]=useState([]);
 
+  useEffect(()=>{
+    if(multipleProductImage.length==0){
+        console.log("hii")
+    }
+  })
   const handleImageChange = (event) => {
 
     const file = event.target.files[0];
@@ -47,6 +52,8 @@ const AdminModal = () => {
   const handleMultiImages =(event)=>{
 
     const selectedImage = event.target.files;
+    
+    setMultipleProductImage((images)=>[...images,...selectedImage]);
     var promises = [];
 
     for (let i = 0; i < selectedImage.length; i++) {
@@ -76,40 +83,47 @@ const AdminModal = () => {
         });
 
 
-    // setMultipleProductImage((images)=>[...images,...selectedImage]);
   }
 
  function removeImage(index){
     console.log(index)
+    var allIdes=[...ids,index];
     setIds((ids)=>[...ids,index])
 
-   var images = [...product.featureImages];
+   var image = [...product.featureImages];
+  var images = image.filter((imagess, index) => !allIdes.includes(index));
+    // for(let i=0;i<ids.length;i++){
+    //     console.log(ids[i]);
+    //     images = images.filter((image,id)=>{id!=ids[i]}) 
+    // }
 
-    for(let i=0;i<ids.length;i++){
-        console.log(ids[i]);
-        images = images.filter((image,id)=>id!=ids[i]) 
-    }
-    images = images.filter((image,i)=>i!=index);
+    // images = images.filter((image,i)=>i!=index);
 
+    console.log(images)
     setMultipleProductImage(()=>[]);
 
-    for(let i=0;i<images.length;i++){
-
-   const blob= urlToBlob(images[i])
-    .then(blob => {
-        return blob;
-    })
-    .catch(error => {
-        console.error(error);
-    });
+    var promises = [];
   
-    const fileName = images[i].substring(images[i].lastIndexOf('/') + 1);
-    const fetchedFile = new File([blob], fileName, { type: blob.type });
- 
-    console.log(fetchedFile)
-    setMultipleProductImage((images)=>[...images,fetchedFile]);
+    for (let i = 0; i < images.length; i++) {
+        const promise = urlToBlob(images[i])
+            .then(blob => {
+                const fileName = images[i].substring(images[i].lastIndexOf('/') + 1);
+                return new File([blob], fileName, { type: blob.type });
+            })
+            .catch(error => {
+                console.error(error);
+                return null;
+            });
+  
+        promises.push(promise);
     }
-    console.log(images)
+  
+    Promise.all(promises)
+        .then((files) => {
+            console.log(files);
+            const validFiles = files.filter(file => file !== null);
+            setMultipleProductImage((images) => [...images, ...validFiles]);
+        });
   
  }
 
@@ -136,6 +150,51 @@ const AdminModal = () => {
     setProductImage(product.productImage);
     document.getElementById("adminProductDetails").style.display = "none";
   };
+
+  const editProduct=()=>{
+    console.log("edit")
+    if(singleProductImage == ''){
+
+        const blob= urlToBlob(product.productImage)
+        .then(blob => {
+            return blob;
+        })
+        .catch(error => {
+            console.error(error);
+        });
+      
+        const fileName = product.productImage.substring(product.productImage.lastIndexOf('/') + 1);
+        const fetchedFile = new File([blob], fileName, { type: blob.type });
+        console.log(fetchedFile)
+    }
+    if (multipleProductImage.length === 0) {
+        var images = [];
+        var promises = [];
+    
+        for (let i = 0; i < product.featureImages.length; i++) {
+            const promise = urlToBlob(product.featureImages[i])
+                .then(blob => {
+                    const fileName = product.featureImages[i].substring(product.featureImages[i].lastIndexOf('/') + 1);
+                    const fetchedFile = new File([blob], fileName, { type: blob.type });
+                    images.push(fetchedFile);
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+    
+            promises.push(promise);
+        }
+    
+        Promise.all(promises)
+            .then(() => {
+                console.log(images);
+                // Now you can use the images array here
+            });
+    }else{
+        console.log(multipleProductImage)
+    }
+    
+  }
   return (
     <>
       <div
@@ -358,7 +417,7 @@ const AdminModal = () => {
                     <div className="product-detail__controller">
                       
                       <div className="add-to-cart -dark">
-                        <a className="btn -round -red" href="#">
+                        <a onClick={editProduct} className="btn -round -red" href="#">
                           <i className="fas fa-pencil-alt "></i>
                         </a>
                         <h5>Edit</h5>
