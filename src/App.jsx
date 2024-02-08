@@ -1,35 +1,25 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import Header from "./components/Header/Header";
+import Content from "./components/content/Content";
+import Modal from "./components/ProductDetail/Modal";
+import LoginModal from "./components/LoginModal";
+import AdminProduct from "./components/AdminProducts/AdminProduct";
+import AdminModal from "./components/AdminProductDetails/AdminModal";
+import AddProduct from "./components/Product/AddProduct";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header />
+      {/* <Content /> */}
+      <AdminProduct/>
+      <AdminModal/>
+      <AddProduct/>
+      <Modal />
+      <LoginModal />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
