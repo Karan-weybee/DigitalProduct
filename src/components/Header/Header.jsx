@@ -1,46 +1,52 @@
-import React from "react";
-// import logo from '../'
+import React, { useState } from "react";
+import { useSelector,useDispatch } from "react-redux";
+import { resetUserId } from "../../slices/userSlice";
+import { Link } from "react-router-dom";
+import { applySearch } from "../../slices/productSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(state=>state.userSlice.user);
+  const [search,setSearch]=useState('');
+   
   const openLoginModal = () => {
     document.getElementById("loginModal").style.display = "block";
   };
+
+  const logOut =()=>{
+  dispatch(resetUserId());
+  }
+  const searchProduct = (e)=>{
+    e.preventDefault();
+   dispatch(applySearch(search))
+  }
+  const removeSearch =(e)=>{
+    e.preventDefault();
+    setSearch('');
+    dispatch(applySearch(''))
+    document.getElementById('search-box').classList.remove('active')
+  
+  }
+  const showSearch=()=>{
+    document.getElementById('search-box').classList.add('active')
+  }
   return (
     <div className="menu -style-3">
       <div className="container" style={{ overflow: "hidden" }}>
         <div className="menu__wrapper">
-          <a href="/index.html">
+          <Link to="/">
             <img src="assets/images/logo-white.png" alt="Logo" />
-          </a>
+          </Link>
           <div className="navigator -white">
             <ul>
               <li className="relative">
-                <a href="">
+                <Link to="/">
                   Home
                   <span className="dropable-icon">
                     <i className="fas fa-angle-down"></i>
                   </span>
-                </a>
-                <ul className="dropdown-menu">
-                  <li>
-                    <a href="">Beauty Salon</a>
-                  </li>
-                  <li>
-                    <a href="homepage2.html">Makeup Salon</a>
-                  </li>
-                  <li>
-                    <a href="homepage3.html">Natural Shop</a>
-                  </li>
-                  <li>
-                    <a href="homepage4.html">Spa Shop</a>
-                  </li>
-                  <li>
-                    <a href="homepage5.html">Mask Shop</a>
-                  </li>
-                  <li>
-                    <a href="homepage6.html">Skincare Shop</a>
-                  </li>
-                </ul>
+                </Link>
+               
               </li>
               <li>
                 <a href="services.html">Services</a>
@@ -51,107 +57,74 @@ const Header = () => {
               <li>
                 <a href="shop-fullwidth-4col.html">
                   Shop
-                  <span className="dropable-icon">
-                    <i className="fas fa-angle-down"></i>
-                  </span>
+                 
                 </a>
-                <ul className="dropdown-menu -wide">
-                  <ul className="dropdown-menu__col">
-                    <li>
-                      <a href="shop-fullwidth-4col.html">
-                        Shop Fullwidth 4 Columns
-                      </a>
-                    </li>
-                    <li>
-                      <a href="shop-fullwidth-5col.html">
-                        Shop Fullwidth 5 Columns
-                      </a>
-                    </li>
-                    <li>
-                      <a href="shop-fullwidth-left-sidebar.html">
-                        Shop Fullwidth Left Sidebar
-                      </a>
-                    </li>
-                    <li>
-                      <a href="shop-fullwidth-right-sidebar.html">
-                        Shop Fullwidth Right Sidebar
-                      </a>
-                    </li>
-                  </ul>
-                  <ul className="dropdown-menu__col">
-                    <li>
-                      <a href="shop-grid-4col.html">Shop grid 4 Columns</a>
-                    </li>
-                    <li>
-                      <a href="shop-grid-3col.html">Shop Grid 3 Columns</a>
-                    </li>
-                    <li>
-                      <a href="shop-grid-sidebar.html">Shop Grid Sideber</a>
-                    </li>
-                    <li>
-                      <a href="shop-list-sidebar.html">Shop List Sidebar</a>
-                    </li>
-                  </ul>
-                  <ul className="dropdown-menu__col">
-                    <li>
-                      <a href="product-detail.html">Product Detail</a>
-                    </li>
-                    <li>
-                      <a href="cart.html">Shopping cart</a>
-                    </li>
-                    <li>
-                      <a href="checkout.html">Checkout</a>
-                    </li>
-                    <li>
-                      <a href="wishlist.html">Wish list</a>
-                    </li>
-                  </ul>
-                  <ul className="dropdown-menu__col -banner">
-                    <a href="shop-fullwidth-4col.html">
-                      <img
-                        src="assets/images/header/dropdown-menu-banner.png"
-                        alt="New product banner"
-                      />
-                    </a>
-                  </ul>
-                </ul>
               </li>
               <li>
                 <a href="blog.html">Blog</a>
               </li>
               <li>
-                <a href="contact.html">Contact</a>
+                <Link to="/admin">Admin</Link>
               </li>
             </ul>
           </div>
           <div className="menu-functions -white">
-            <a className="menu-icon -search" href="#">
+            <a className="menu-icon -search" onClick={showSearch}>
               <img
                 src="assets/images/header/search-icon-white.png"
                 alt="Search icon"
               />
+              
             </a>
-            <div className="search-box " style={{ height: "3em" }}>
-              <form>
+            <div className="search-box" id="search-box" style={{ height: "3em",width:'345px' }}>
+              <form action="">
+            
                 <input
                   type="text"
-                  placeholder="What are you looking for?"
+                  placeholder="Search"
                   name="search"
+                  value={search}
+                  onChange={(e)=>{setSearch(e.target.value); dispatch(applySearch(e.target.value))}}
                 />
-                <button>
+                <button type="submit" style={{width:'70px'}} onClick={searchProduct}>
                   <img
                     src="assets/images/header/search-icon.png"
                     alt="Search icon"
                   />
                 </button>
+                <button type="submit" id="removeSearch" onClick={removeSearch}>X</button>
+             
               </form>
             </div>
-            <a className="menu-icon -wishlist" href="/wishlist.html">
+            {user && (
+              <>
+            <Link className="menu-icon -wishlist" to="/wishlist">
               <img
                 src="assets/images/header/wishlist-icon-white.png"
                 alt="Wishlist icon"
               />
+            </Link>
+
+            <div className="menu-cart">
+            <a className="menu-icon -cart" href="#" onClick={logOut}>
+              <img
+                src="./src/assets/images/header/logout.png"
+                alt="Wishlist icon"
+                style={{
+                  background: "white",
+                  borderRadius: "10px",
+                  padding: "1px",
+                }}
+              />
+              {/* <span className="cart__quantity">0</span> */}
             </a>
+            <h5>
+              <span></span>
+            </h5>
+          </div>
+          </>
+            )}
+            {!user && (
             <div className="menu-cart">
               <a className="menu-icon -cart" href="#" onClick={openLoginModal}>
                 <img
@@ -169,6 +142,8 @@ const Header = () => {
                 <span></span>
               </h5>
             </div>
+          
+            )}
             <a className="menu-icon -navbar" href="#">
               <div className="bar"></div>
               <div className="bar"></div>

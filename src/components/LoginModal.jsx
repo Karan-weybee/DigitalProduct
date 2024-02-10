@@ -1,6 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch,useSelector } from "react-redux";
+import { loginUser, signUpUser } from "../slices/userSlice";
+import { fetchWishList } from "../slices/wishListSlice";
 
 const LoginModal = () => {
+  const dispatch = useDispatch();
+
+  const {user,isError}=useSelector(state=>state.userSlice);
+
   const closeLoginModal = () => {
     document.getElementById("loginModal").style.display = "none";
   };
@@ -11,11 +18,22 @@ const LoginModal = () => {
   const login = (e) => {
     e.preventDefault();
     console.log(email,password);
+    dispatch(loginUser({email:email,password:password}));
+    if(!isError){
+        closeLoginModal();
+      }
   };
+
+
+
   const signUp = (e) => {
     e.preventDefault();
     console.log("submit sign up");
     console.log(email,password);
+    dispatch(signUpUser({email:email,password:password}));
+    if(!isError){
+        closeLoginModal();
+      }
   };
 
   return (
@@ -53,6 +71,12 @@ const LoginModal = () => {
                       alt="Decoration"
                     />
                   </div>
+                  <div style={{color:'red',fontSize:'16px',marginBottom:'0.5em'}}>
+                    {isError && (
+                        <>{isError}
+                        </>
+                    )}
+                  </div>
                   {nameType == "SignUp" && (
                     <form
                       onSubmit={signUp}
@@ -80,29 +104,7 @@ const LoginModal = () => {
                           onChange={(e)=>setPassword(e.target.value)}
                         />
                       </div>
-                      {/* <div className="input-validator">
-                      <select
-                        className="customed-select required"
-                        name="service"
-                      >
-                        <option value="" hidden="hidden">
-                          Choose a services
-                        </option>
-                        <option value="Spa">Spa</option>
-                        <option value="Salon">Salon</option>
-                        <option value="Nail">Nail</option>
-                      </select>
-                    </div>
-                    <div className="input-validator">
-                      <select className="customed-select required" name="date">
-                        <option value="" hidden="hidden">
-                          Choose a data
-                        </option>
-                        <option value="Yesterday">Yesterday</option>
-                        <option value="Today">Today</option>
-                        <option value="Tomorow">Tomorow</option>
-                      </select>
-                    </div> */}
+                     
                       <button
                         type="submit"
                         style={{ margin: "0 10px 10px 0" }}
@@ -149,29 +151,7 @@ const LoginModal = () => {
                           onChange={(e)=>setPassword(e.target.value)}
                         />
                       </div>
-                      {/* <div className="input-validator">
-                      <select
-                        className="customed-select required"
-                        name="service"
-                      >
-                        <option value="" hidden="hidden">
-                          Choose a services
-                        </option>
-                        <option value="Spa">Spa</option>
-                        <option value="Salon">Salon</option>
-                        <option value="Nail">Nail</option>
-                      </select>
-                    </div>
-                    <div className="input-validator">
-                      <select className="customed-select required" name="date">
-                        <option value="" hidden="hidden">
-                          Choose a data
-                        </option>
-                        <option value="Yesterday">Yesterday</option>
-                        <option value="Today">Today</option>
-                        <option value="Tomorow">Tomorow</option>
-                      </select>
-                    </div> */}
+                     
                       <button
                         type="submit"
                         style={{ margin: "0 10px 10px 0" }}

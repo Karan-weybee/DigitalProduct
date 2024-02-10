@@ -1,19 +1,65 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import ReactImageZoom from "react-image-zoom";
+import React,{useState,useEffect} from "react";
+import { useDispatch,useSelector } from "react-redux";
+import { addWishList, fetchWishList, removeWishList } from "../../slices/wishListSlice";
+import MagnifierZoomImage from "./MagnifierZoomImage";
 
-import zoomImage from "../../../src/assets/images/product/4.png";
 
 const Modal = () => {
+
+  const user = useSelector(state=>state.userSlice.user)
+  const dispatch = useDispatch();
+  const [ids,setIds]=useState([])
+  const [url,setUrl]=useState("");
+  const product = useSelector(state=>state.productSlice.Product)
+  console.log(product)
   const closeProductDetails = () => {
     document.getElementById("productDetails").style.display = "none";
   };
+ 
+  useEffect(()=>{
+    setUrl(product.productImage)
+  },[product])
+  useEffect(()=>{
+    if(user){
+    dispatch(fetchWishList(user))
+    }
+    else{
+      setIds(()=>[])
+    }
+    },[user])
+    
+   const wishList = useSelector(state=>state.wishListSlice.wishList)
+   console.log(wishList)
+  
+   useEffect(()=>{
+  if(wishList.length>0){
+    var id=[];
+    wishList.forEach(wish => {
+      id.push(wish.productId)
+   })
+  setIds(id)
+  }
+   },[wishList])
 
-  //   const props = { width: 400, height: 250, zoomWidth: 500, img: zoomImage };
-  //   ReactDOM.render(
-  //     <ReactImageZoom {...props} />,
-  //     document.getElementById("ImageForZoom")
-  //   );
+   const removeWish = (id)=>{
+    dispatch(removeWishList({uid:user,pid:id})).then(()=>{
+      dispatch(fetchWishList(user))
+    })
+   }
+  
+   const addWish=(id)=>{
+    if(!user){
+      document.getElementById("loginModal").style.display = "block";
+    }
+    else{
+      dispatch(addWishList({
+        "UserId":user,
+        "ProductId":id
+    })).then(()=>{
+      dispatch(fetchWishList(user))
+    })
+    }
+   }
   return (
     <>
       <div
@@ -33,31 +79,27 @@ const Modal = () => {
         >
           {/* <div className="modal" id="quick-view-modal" style={{ opacity: "1",display:'none' }}> */}
           <div className="product-quickview show">
+
+            {product && (
             <div className="row">
               <div className="col-12 col-md-6">
                 <div className="product-detail__slide-one">
                   <div className="slider-wrapper slick-initialized slick-slider slick-dotted">
-                    <div className="slick-list draggable">
-                      <div>
-                        <div style={{ width: "270px", margin: "auto" }}>
-                          <img
-                            id="ImageForZoom"
-                            src={zoomImage}
-                            alt="Product image"
-                          />
-                        </div>
-                      </div>
+                    <div className="slick-list draggable" id="zoomId" style={{ width: '692px',
+                 zIndex:'90'}}>
+                     {url && (
+                          // <img
+                          //   id="ImageForZoom"
+                          //   className="slick-list draggable"
+                          //   style={{margin:'auto'}}
+                          //   src={url}
+                          //   alt="Product image"
+                          // />
+                          <MagnifierZoomImage url={url}/>
+                          )}
+                        
                     </div>
-                    {/* <ReactImageZoom
-                      width={270}
-                      height={270}
-                      zoomLensStyle={{
-                        width: "150px",
-                        height: "150px",
-                      }}
-                      zoomWidth={500}
-                      img={zoomImage}
-                    /> */}
+                   
                     <div
                       style={{
                         marginTop: "2em",
@@ -70,24 +112,23 @@ const Modal = () => {
                     >
                       <img
                         style={{ height: "150px" }}
-                        src="./src/assets/images/product/4.png"
+                        src={product.productImage}
                         alt="Product image"
+                        onClick={()=>setUrl(product.productImage)}
                       />
-                      <img
+                      {
+                        product.featureImages && 
+                        product.featureImages.map((image)=>(
+                        <img
                         style={{ height: "150px" }}
-                        src="./src/assets/images/product/4.png"
+                        src={image}
                         alt="Product image"
+                        onClick={()=>setUrl(image)}
                       />
-                      <img
-                        style={{ height: "150px" }}
-                        src="./src/assets/images/product/4.png"
-                        alt="Product image"
-                      />
-                      <img
-                        style={{ height: "150px" }}
-                        src="./src/assets/images/product/4.png"
-                        alt="Product image"
-                      />
+                        ))
+                      }
+                       
+                     
                     </div>
                   </div>
                 </div>
@@ -95,8 +136,8 @@ const Modal = () => {
               <div className="col-12 col-md-6" id="zoomImage">
                 <div className="product-detail__content">
                   <div className="product-detail__content__header">
-                    <h5>eyes</h5>
-                    <h2>The expert mascaraa</h2>
+                    <h5>{product.name}</h5>
+                    <h2>{product.discription}</h2>
                   </div>
                   <div className="product-detail__content__header__comment-block">
                     <div className="rate">
@@ -109,14 +150,18 @@ const Modal = () => {
                     <p>03 review</p>
                     <a href="#">Write a reviews</a>
                   </div>
-                  <h3>$35.00</h3>
-                  <div className="divider"></div>
-                  <div className="product-detail__content__footer">
+                  <h3>${product.price}</h3>
+                  <div className="divider" style={{margin:'1.125rem 0'}}></div>
+                  <div style={{marginBottom:'1em',fontSize:'20px'}}>Tags :</div>
+                  <div className="product-detail__content__footer" id="tags">
                     <ul>
-                      <li>Brand:gucci</li>
-                      <li>Product code: PM 01</li>
-                      <li>Reward point: 30</li>
-                      <li>Availability: In Stock</li>
+                      { product.tags&&
+                        product.tags.map((tag)=>(
+                      <>
+                      <li><span>{tag}</span></li>
+                      </>
+                      ))
+                    }
                     </ul>
                     <div className="product-detail__colors">
                       <span>Color:</span>
@@ -129,31 +174,28 @@ const Modal = () => {
                         style={{ backgroundColor: "#4169e1" }}
                       ></div>
                     </div>
-                    <div className="product-detail__controller">
-                      <div className="quantity-controller -border -round">
-                        <div className="quantity-controller__btn -descrease">
-                          -
-                        </div>
-                        <div className="quantity-controller__number">2</div>
-                        <div className="quantity-controller__btn -increase">
-                          +
-                        </div>
-                      </div>
-                      <div className="add-to-cart -dark">
-                        <a className="btn -round -red" href="#">
-                          <i className="fas fa-shopping-bag"></i>
-                        </a>
-                        <h5>Add to cart</h5>
-                      </div>
+                    {!ids.includes(product.id) && (
+                      <div className="product-detail__controller" style={{justifyContent:'left'}}>
                       <div className="product-detail__controler__actions"></div>
-                      <a className="btn -round -white" href="#">
+                      <a className="btn -round -white" onClick={()=>addWish(product.id)}>
                         <i className="fas fa-heart"></i>
                       </a>
                     </div>
+                              )}
+                              {ids.includes(product.id) && (
+                            <div className="product-detail__controller" style={{justifyContent:'left'}}>
+                      <div className="product-detail__controler__actions"></div>
+                      <a style={{background:'red',color:'white'}} className="btn -round -white"  onClick={()=>removeWish(product.id)}>
+                        <i className="fas fa-heart"></i>
+                      </a>
+                    </div>
+                              )}
+                    
                   </div>
                 </div>
               </div>
             </div>
+            )}
           </div>
           <a
             href="#close-modal"

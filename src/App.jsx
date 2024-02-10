@@ -7,20 +7,26 @@ import LoginModal from "./components/LoginModal";
 import AdminProduct from "./components/AdminProducts/AdminProduct";
 import AdminModal from "./components/AdminProductDetails/AdminModal";
 import AddProduct from "./components/Product/AddProduct";
+import UserWishList from "./components/UserWishList/UserWishList";
+import { Outlet } from "react-router-dom";
 // import EditProduct from "./components/Product/EditProduct";
 
 function App() {
   return (
     <>
-      <Header />
+    
+    <Header/>
+    <Outlet/>
+      {/* <Header />
      
       <AdminProduct/>
       <AdminModal/>
       <AddProduct/>
 
- {/* <Content /> */}
+      <Content />
       <Modal />
       <LoginModal />
+      <UserWishList/> */}
     </>
   );
 }

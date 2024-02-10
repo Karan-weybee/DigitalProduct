@@ -3,10 +3,21 @@ import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 const initialState = {
     Products: [],
     Product:{},
+    categories:[],
+    pricerange:[0,10000],
+    search:'',
     isLoading:false,
     isError:false
 }
 
+export const updateProduct = createAsyncThunk('updateProduct',async(data)=>{
+    
+    const responce= await fetch(`https://localhost:44326/api/products/${data.id}`, {
+       method: 'PUT',
+       body: data.formData
+    });
+   return responce.json();
+});
 
 export const addProduct = createAsyncThunk('addProduct',async(formData)=>{
     const responce= await fetch('https://localhost:44326/api/products', {
@@ -37,8 +48,21 @@ export const productSlice = createSlice({
     reducers: {
         addFeatureImages : (state,action)=>{
             var product= [state.Product].map((product)=>{product.featureImages=[...product.featureImages,...action.payload]})
-           
-            // state.Product = product[0]
+        },
+        setCategories:(state,action)=>{
+            state.categories= action.payload
+        },
+        removeCategories : (state,action)=>{
+            state.categories= state.categories.filter((tag)=>tag != action.payload);
+            console.log(state.categories)
+        },
+        applySearch : (state,action)=>{
+            state.search = action.payload;
+        },
+        applyPriceRange : (state,action)=>{
+            console.log(action.payload)
+            state.pricerange=action.payload
+            console.log(state.pricerange)
         }
     },
     extraReducers:(builder)=>{
@@ -63,7 +87,7 @@ export const productSlice = createSlice({
             state.isLoading=true;
         }),
         builder.addCase(fetchProduct.fulfilled,(state,action)=>{
-            console.log("fullfill")
+            console.log("fullfill product")
           state.isLoading=false;
           state.Product= action.payload
         }),
@@ -85,6 +109,21 @@ export const productSlice = createSlice({
         builder.addCase(addProduct.rejected,(state,action)=>{
             console.log("error",action.payload)
            state.isError=true
+        }),
+
+        // edit product 
+         // add product 
+         builder.addCase(updateProduct.pending,(state,action)=>{
+            console.log("pending")
+            state.isLoading=true;
+        }),
+        builder.addCase(updateProduct.fulfilled,(state,action)=>{
+            console.log("fullfill")
+          state.isLoading=false;
+        }),
+        builder.addCase(updateProduct.rejected,(state,action)=>{
+            console.log("error",action.payload)
+           state.isError=true
         })
     }
 
@@ -92,6 +131,6 @@ export const productSlice = createSlice({
 
 
 
-export const {addFeatureImages} = productSlice.actions
+export const {addFeatureImages,setCategories,removeCategories,applySearch,applyPriceRange} = productSlice.actions
 
 export default productSlice.reducer

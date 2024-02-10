@@ -5832,7 +5832,7 @@ ul {
   border: 0;
   background-color: transparent;
   right: 0.9375em;
-  top: 50%;
+  top: 46%;
   transform: translateY(-50%);
 }
 .menu.-style-2,
@@ -10712,4 +10712,53 @@ a.close-modal {
 .custom-file-input label:hover,
 .custom-file-input label:focus {
   background-color: green;
+}
+#tags ul li span{
+  padding: 5px 7px;
+    border-radius: 15px;
+    border: 1px solid black;
+}
+#tags ul li{
+  margin-bottom: 0.7em;
+  margin-right: 10px;
+}
+#tags ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.shop-header__page ul{    display: flex;
+  gap: 5px;
+
+}
+.shop-header__page ul li{
+  border: 1px solid black;
+  padding: 3px 6px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  gap: 1px;
+}
+.shop-header__page ul li button{
+  background: white;
+  border: 1px;
+  margin-top: 1px;
+  height: 18px;
+  
+}
+#ImageForZoom{
+  margin: auto;
+  height: 345px;
+  width: auto;
+  object-fit: cover;
+}
+#removeSearch{
+  position: absolute;
+  right: -0.5%;
+  font-size: 22px;
+  background: red;
+  height: 45px;
+  color: white;
+  margin: 0px;
 }

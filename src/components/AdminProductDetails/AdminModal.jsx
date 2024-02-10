@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
-import ReactImageZoom from "react-image-zoom";
-
-import zoomImage from "../../../src/assets/images/product/4.png";
 import { useSelector,useDispatch } from "react-redux";
 import closeImage from '../../assets/images/close-image.png'
-import { addFeatureImages, fetchProduct } from "../../slices/productSlice";
+import { addFeatureImages, fetchProduct, fetchProducts, updateProduct } from "../../slices/productSlice";
+import DropDownTag from "../Product/DropDownTag";
 
 const AdminModal = () => {
     const dispatch = useDispatch();
@@ -14,15 +12,36 @@ const AdminModal = () => {
   const product = useSelector(state=>state.productSlice.Product);
   console.log(product)
 
+  const [selectedOptions, setSelectedOptions] = useState();
+  const [name, setName] = useState();
+  const [discription, setDiscription] = useState("");
+  const [price,setPrice]=useState('');
+
+  useEffect(()=>{
+  setName(product.name)
+  setDiscription(product.discription)
+  setPrice(product.price) 
+  var tags=[];
+  if(product.tags){
+  product.tags.forEach(tag => {
+    tags.push({ value: tag, label: tag })
+  })
+}
+  setSelectedOptions(tags)
+  },[product])
+
 //   var productImage=product.productImage;
   const [productImage,setProductImage]=useState(product.productImage);
   const [featureImages,setFeatureImages]=useState(product.featureImages);
+  
   const [ids,setIds]=useState([]);
 
   useEffect(()=>{
+    if(product){
     setProductImage(product.productImage);
     setFeatureImages(product.featureImages);
-  },[])
+    }
+  },[product])
 
 
   
@@ -31,11 +50,7 @@ const AdminModal = () => {
  
   const [multipleProductImage,setMultipleProductImage]=useState([]);
 
-  useEffect(()=>{
-    if(multipleProductImage.length==0){
-        console.log("hii")
-    }
-  })
+ 
   const handleImageChange = (event) => {
 
     const file = event.target.files[0];
@@ -148,11 +163,18 @@ const AdminModal = () => {
 }
   const closeProductDetails = () => {
     setProductImage(product.productImage);
-    document.getElementById("adminProductDetails").style.display = "none";
+    setIds(()=>[])
+    dispatch(fetchProduct(product.id)).then(()=>{
+        dispatch(fetchProducts()).then(()=>{
+            document.getElementById("adminProductDetails").style.display = "none";
+        })
+    })
   };
 
   const editProduct=()=>{
     console.log("edit")
+    var productImg=singleProductImage;
+
     if(singleProductImage == ''){
 
         const blob= urlToBlob(product.productImage)
@@ -165,7 +187,9 @@ const AdminModal = () => {
       
         const fileName = product.productImage.substring(product.productImage.lastIndexOf('/') + 1);
         const fetchedFile = new File([blob], fileName, { type: blob.type });
-        console.log(fetchedFile)
+        productImg=fetchedFile;
+    }else{
+        // console.log(singleProductImage)
     }
     if (multipleProductImage.length === 0) {
         var images = [];
@@ -184,15 +208,57 @@ const AdminModal = () => {
     
             promises.push(promise);
         }
-    
         Promise.all(promises)
             .then(() => {
                 console.log(images);
-                // Now you can use the images array here
+                console.log("name :",name);
+                console.log("discr.",discription);
+                console.log("price:",price),
+                console.log(selectedOptions)
+                console.log(productImg)
+        
+                var tags = selectedOptions.map((option)=>option.value).join(',')
+                var Images= [...images]
+                const formData = new FormData();
+        
+                Images.forEach((file) => {
+                    formData.append(`featureImages`, file);
+                });
+                // Append form data to the FormData object
+                formData.append('file', productImg);
+                formData.append('tags', tags);
+                // formData.append(`featureImages`, [...multipleImage]);
+                formData.append('productJson', `{"Id": ${product.id},"Name": "${name}","Discription":"${discription}","Price":${price}}`);
+                dispatch(updateProduct({"formData":formData,"id":product.id})).then(()=>{
+                    dispatch(fetchProduct(product.id));
+                })
             });
     }else{
         console.log(multipleProductImage)
+        console.log("name :",name);
+        console.log("discr.",discription);
+        console.log("price:",price),
+        console.log(selectedOptions)
+        console.log(productImg)
+
+        var tags = selectedOptions.map((option)=>option.value).join(',')
+        var Images= [...multipleProductImage]
+        const formData = new FormData();
+
+        Images.forEach((file) => {
+            formData.append(`featureImages`, file);
+        });
+        // Append form data to the FormData object
+        formData.append('file', productImg);
+        formData.append('tags', tags);
+        // formData.append(`featureImages`, [...multipleImage]);
+        formData.append('productJson', `{"Id": ${product.id},"Name": "${name}","Discription":"${discription}","Price":${price}}`);
+        dispatch(updateProduct({"formData":formData,"id":product.id})).then(()=>{
+            dispatch(fetchProduct(product.id));
+        })
     }
+
+   
     
   }
   return (
@@ -212,7 +278,6 @@ const AdminModal = () => {
             overflow: "scroll",
           }}
         >
-          {/* <div className="modal" id="quick-view-modal" style={{ opacity: "1",display:'none' }}> */}
           <div className="product-quickview show">
             <div className="row">
               <div className="col-12 col-md-6">
@@ -228,9 +293,10 @@ const AdminModal = () => {
                                          <>
                                          <a
                                             href="#close-modal"
+                                            id="closeImage"
                                             rel="modal:close"
                                             class="close-modal "
-                                            style={{ top: "2.5px", right: "4.5px" }}
+                                            style={{ top: "2.5px",left:'0%' }}
                                             onClick={()=>{setProductImage('')}}
                                         >
                                          Close
@@ -244,12 +310,33 @@ const AdminModal = () => {
     
                               </>
                                     )}
+                                    {  productImage != undefined && (
+                                         <>
+                                         <a
+                                            href="#close-modal"
+                                            id="closeImage"
+                                            rel="modal:close"
+                                            class="close-modal "
+                                            style={{ top: "2.5px",left:'0%' }}
+                                            onClick={()=>{setProductImage('')}}
+                                        >
+                                         Close
+                                        </a>
+                                    <img
+                                      id="ImageForZoom"
+                                     src={productImage}
+                                   // src={zoomImage}
+                                   alt="Product image"
+                              />
+    
+                              </>
+                                    )}
                                     <>
                                      <a
                                         href="#close-modal"
                                         rel="modal:close"
                                         class="close-modal "
-                                        style={{ top: "2.5px", right: "4.5px" }}
+                                        style={{ top: "2.5px",left:'0%'}}
                                         onClick={()=>{setProductImage('')}}
                                     >
                                      Close
@@ -330,12 +417,13 @@ const AdminModal = () => {
                             }</>)
                         }
                         
-                        
                         </>)}
-
                         {featureImages != undefined && (
                        <>{
                           featureImages.map((image, index) => (
+                            
+                            <>
+                     { !ids.includes(index) && (
                             <>
                             <span style={{position:'relative'}}>
                               <img
@@ -357,6 +445,7 @@ const AdminModal = () => {
                                 onClick={()=>removeImage(index)} src={closeImage} alt="" />
                              
                              </span>
+                                </>)}
                               </>   
                           ))
                         }
@@ -390,8 +479,10 @@ const AdminModal = () => {
               <div className="col-12 col-md-6" id="zoomImage">
                 <div className="product-detail__content">
                   <div className="product-detail__content__header">
-                    <h5>{product.name}</h5>
-                    <h2>{product.discription}</h2>
+                    {/* <h5>{product.name}</h5> */}
+                    <input type="text" name="" id="" value={name} onChange={(e)=>setName(e.target.value)} style={{fontSize:'20px',border:'1px',marginBottom:'0.1em'}}/>
+                    <input type="text" name="" id="" value={discription} onChange={(e)=>setDiscription(e.target.value)} style={{fontSize:'16px',border:'1px',marginBottom:'1em'}}/>
+                    
                   </div>
                   <div className="product-detail__content__header__comment-block">
                     <div className="rate">
@@ -404,8 +495,13 @@ const AdminModal = () => {
                     <p>03 review</p>
                     <a href="#">Write a reviews</a>
                   </div>
-                  <h3>${product.price}</h3>
+                  <h3>$<input type="number" name="" id="" value={price} onChange={(e)=>setPrice(e.target.value)} style={{border:'1px',marginBottom:'1em'}}/>
+                    </h3>
                   <div className="divider"></div>
+                  <div style={{marginBottom:'1em'}}>
+                 < label htmlFor="" style={{display:'block',marginBottom:'1em'}}>Tags :</label>
+                   <DropDownTag selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/>
+                </div>   
                   <div className="product-detail__content__footer">
                     <ul>
                       <li>Brand:gucci</li>

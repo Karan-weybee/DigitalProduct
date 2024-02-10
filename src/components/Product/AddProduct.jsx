@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import DropDownTag from "./DropDownTag";
 import { useDispatch,useSelector} from "react-redux";
-import { fetchProducts } from "../../slices/productSlice";
+import { addProduct, fetchProducts } from "../../slices/productSlice";
 
 const AddProduct = () => {
     const dispatch = useDispatch();
 
   const closeAddProduct = () => {
-    document.getElementById("ProductAdd").style.display = "none";
+    dispatch(fetchProducts()).then(()=>{
+        document.getElementById("ProductAdd").style.display = "none";
+    })
   };
 
-  useEffect(()=>{
-    
-  },[])
 
   const [selectedOptions, setSelectedOptions] = useState();
   const [name, setName] = useState("");
@@ -40,7 +39,7 @@ const AddProduct = () => {
         // formData.append(`featureImages`, [...multipleImage]);
         formData.append('productJson', `{"Name": "${name}","Discription":"${discription}","Price":${price}}`);
 
-        dispatch(fetchProducts(formData))
+        dispatch(addProduct(formData))
     }
   };
 

@@ -1,21 +1,41 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import Select from 'react-select';
+import { useDispatch,useSelector } from 'react-redux';
+import { fetchTags } from '../../slices/tagSlice';
 
 const DropDownTag = ({selectedOptions,setSelectedOptions}) => {
-
-   
+  const dispatch = useDispatch();
   const [createValue,setCreateValue]=useState('')
+  const [customOptions,setCustomOptions]=useState([]);
+//   var customOptions = [
+    // { value: 'bueaty', label: 'Bueaty' },
+    // { value: 'soap', label: 'Soap' },
+    // Add more options as needed
+//   ];
 
   const handleChange = (selectedOptions) => {
     console.log("hii")
     setSelectedOptions(selectedOptions);
   };
 
-  const customOptions = [
-    { value: 'bueaty', label: 'Bueaty' },
-    { value: 'soap', label: 'Soap' },
-    // Add more options as needed
-  ];
+  useEffect(()=>{
+    dispatch(fetchTags());
+  },[])
+ const alltags = useSelector(state=>state.tagSlice.tags);
+
+ var Alltag =[];
+useEffect(()=>{
+   if(alltags.length>0){
+    Alltag =[];
+     alltags.forEach(tag => {
+        Alltag.push({ value:tag.name, label: tag.name })
+     });
+     setCustomOptions(Alltag)
+
+   }
+},[alltags])
+
+console.log(customOptions)
 
   const createOption = (inputValue) => ({
     value: inputValue.toLowerCase(),
@@ -27,7 +47,6 @@ const DropDownTag = ({selectedOptions,setSelectedOptions}) => {
         event.preventDefault();
         console.log("create")
         if(createValue.trim('') !== ''){
-
             setSelectedOptions([...selectedOptions, createOption(createValue)]);
         }
     }
