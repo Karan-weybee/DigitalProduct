@@ -6,12 +6,6 @@ import { addProduct, fetchProducts } from "../../slices/productSlice";
 const AddProduct = () => {
     const dispatch = useDispatch();
 
-  const closeAddProduct = () => {
-    dispatch(fetchProducts()).then(()=>{
-        document.getElementById("ProductAdd").style.display = "none";
-    })
-  };
-
 
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [name, setName] = useState("");
@@ -21,6 +15,14 @@ const AddProduct = () => {
   const [multipleImage,setMultipleImage]=useState('')
   const [isError,setIsError]=useState('');
 
+
+  const closeAddProduct = () => {
+    setIsError('');
+
+    dispatch(fetchProducts()).then(()=>{
+        document.getElementById("ProductAdd").style.display = "none";
+    })
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(event)

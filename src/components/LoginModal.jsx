@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { loginUser, setUserId, signUpUser } from "../slices/userSlice";
 import { fetchWishList } from "../slices/wishListSlice";
@@ -8,7 +8,7 @@ const LoginModal = () => {
   const dispatch = useDispatch();
   const nevigate = useNavigate();
   const {user,isError}=useSelector(state=>state.userSlice);
-
+  console.log(isError)
   const closeLoginModal = () => {
     document.getElementById("loginModal").style.display = "none";
   };
@@ -25,26 +25,25 @@ const LoginModal = () => {
     console.log(email,password)
     dispatch(setUserId({uid : 'admin'}));
     nevigate('/admin');
-
    }
    else{
     dispatch(loginUser({email:email,password:password}));
-    if(!isError){
-        closeLoginModal();
-      }
     }
   };
-
-
+  
+  useEffect(()=>{
+    if(isError == ''){
+        console.log("dfghdfjkghjdfghjfdhgj")
+        closeLoginModal();
+      }
+  },[isError])
 
   const signUp = (e) => {
     e.preventDefault();
     console.log("submit sign up");
     console.log(email,password);
     dispatch(signUpUser({email:email,password:password}));
-    if(!isError){
-        closeLoginModal();
-      }
+   
   };
 
   return (

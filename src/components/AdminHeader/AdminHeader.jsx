@@ -9,6 +9,7 @@ const AdminHeader = () => {
   const dispatch = useDispatch();
   const nevigate = useNavigate();
   const user = useSelector(state=>state.userSlice.user);
+  console.log(user)
   const [search,setSearch]=useState('');
    
 

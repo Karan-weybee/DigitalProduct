@@ -23,6 +23,7 @@ const Content = () => {
   const {Products} = useSelector(state => state.productSlice)
   console.log(Products)
 
+
   useEffect(()=>{
      if(priceRange){
       console.log("sgdhghjggh")
@@ -57,12 +58,14 @@ const Content = () => {
 
  useEffect(()=>{
 if(wishList.length>0){
-  var id=[];
-  wishList.forEach(wish => {
-    id.push(wish.productId)
- })
-setIds(id)
-}
+  if(user){
+    var id=[];
+    wishList.forEach(wish => {
+      id.push(wish.productId)
+   })
+  setIds(id)
+  }
+  }
  },[wishList])
  
  const removeWish = (id)=>{
@@ -137,7 +140,7 @@ setIds(id)
                               </Link>
                             </div>
 
-                            {!ids.includes(product.id) && (
+                            {ids.includes(product.id) == false && (
                             <div className="product-btn">
                               <Link
                                 className="btn -white product__actions__item -round"
@@ -147,7 +150,7 @@ setIds(id)
                               </Link>
                             </div>
                               )}
-                              {ids.includes(product.id) && (
+                              {ids.includes(product.id)  && (
                             <div className="product-btn">
                               <Link style={{background:'red',color:'white'}}
                                 className="btn -white product__actions__item -round"

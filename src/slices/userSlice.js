@@ -2,6 +2,7 @@ import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
     user:null,
+    tokenName:'',
     isError:''
 
 }
@@ -33,7 +34,7 @@ export const signUpUser = createAsyncThunk('signUpUser',async(data)=>{
       },
        body:JSON.stringify(formData),
     });
-
+   console.log(responce)
    return responce.json();
 });
 
@@ -58,11 +59,13 @@ export const userSlice = createSlice({
         builder.addCase(loginUser.fulfilled,(state,action)=>{
             console.log("fullfill")
           state.user= action.payload.userId
+          state.tokenName=action.payload.tokenName
+          console.log(state.tokenName)
           console.log(state.user)
           state.isError="";
         }),
         builder.addCase(loginUser.rejected,(state,action)=>{
-            console.log("fullfill")
+            console.log("rejected")
             state.isError="Invalid email or password"
         }),
         builder.addCase(signUpUser.pending,(state,action)=>{
@@ -71,6 +74,7 @@ export const userSlice = createSlice({
         builder.addCase(signUpUser.fulfilled,(state,action)=>{
             console.log("fullfill")
           state.user= action.payload.userId
+          state.tokenName=action.payload.tokenName
           console.log(state.user)
           state.isError="";
         }),
