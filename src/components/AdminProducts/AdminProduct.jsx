@@ -1,7 +1,9 @@
 import React,{useEffect, useState} from "react";
 import Footer from '../Footer/Footer'
+import right from '../../assets/images/right.png'
+import wrong from '../../assets/images/close-image.png'
 import { useSelector,useDispatch } from "react-redux";
-import { fetchProduct, fetchProducts } from "../../slices/productSlice";
+import { fetchProduct, fetchProducts, removeProduct } from "../../slices/productSlice";
 
 const AdminProduct = () => {
     const dispatch = useDispatch();
@@ -23,9 +25,14 @@ const AdminProduct = () => {
     document.getElementById("ProductAdd").style.display ='block';
   }
 
-  const openEditProduct = ()=>{
- 
-    document.getElementById("ProductEdit").style.display ='block';
+  const deleteProduct=(id)=>{
+
+    dispatch(removeProduct(id))  
+    console.log("delete",id)
+  }
+
+  const notremove =()=>{
+    console.log("not delete")
   }
   return (
     <>
@@ -67,7 +74,6 @@ const AdminProduct = () => {
                         <div className="product-thumb">
                           <a
                             className="product-thumb__image"
-                            href="/shop/product-detail.html"
                           >
                             <img
                               src={product.productImage}
@@ -88,13 +94,20 @@ const AdminProduct = () => {
                                 <i className="fas fa-pencil-alt "></i>
                               </a>
                             </div>
-                            <div className="product-btn">
+                            <div className="product-btn ">
                               <a
-                                className="btn -white product__actions__item -round"
-                                href="#"
+                                className="btn -white product__actions__item -round delete-btn"
                               >
                                 <i className="fas fa-trash-alt"></i>
                               </a>
+                              <div className="conformDelete">
+                                <p style={{fontWeight:'500'}}>Delete ?</p>
+                                <div style={{display:'flex',justifyContent:'center',gap:'5px'}}>
+                                <button className="right" onClick={()=>deleteProduct(product.id)}><img src={right} alt="" /></button>
+                                <button className="wrong" onClick={notremove}><img src={wrong} alt="" /></button>
+                                </div>
+                                <div className="arrow"></div>
+                              </div>
                             </div>
                           </div>
                         </div>

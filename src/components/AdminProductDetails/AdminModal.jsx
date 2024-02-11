@@ -107,13 +107,7 @@ const AdminModal = () => {
 
    var image = [...product.featureImages];
   var images = image.filter((imagess, index) => !allIdes.includes(index));
-    // for(let i=0;i<ids.length;i++){
-    //     console.log(ids[i]);
-    //     images = images.filter((image,id)=>{id!=ids[i]}) 
-    // }
-
-    // images = images.filter((image,i)=>i!=index);
-
+    
     console.log(images)
     setMultipleProductImage(()=>[]);
 
@@ -186,7 +180,7 @@ const AdminModal = () => {
         });
       
         const fileName = product.productImage.substring(product.productImage.lastIndexOf('/') + 1);
-        const fetchedFile = new File([blob], fileName, { type: blob.type });
+        const fetchedFile = new File([blob], fileName, { type:'image/png'});
         productImg=fetchedFile;
     }else{
         // console.log(singleProductImage)

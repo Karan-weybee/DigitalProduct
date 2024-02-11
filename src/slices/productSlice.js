@@ -19,6 +19,14 @@ export const updateProduct = createAsyncThunk('updateProduct',async(data)=>{
    return responce.json();
 });
 
+export const removeProduct = createAsyncThunk('removeProduct',async(id)=>{
+    
+    const responce= await fetch(`https://localhost:44326/api/products/${id}`, {
+       method: 'DELETE'
+    });
+   return responce.json();
+});
+
 export const addProduct = createAsyncThunk('addProduct',async(formData)=>{
     const responce= await fetch('https://localhost:44326/api/products', {
        method: 'POST',
@@ -112,7 +120,6 @@ export const productSlice = createSlice({
         }),
 
         // edit product 
-         // add product 
          builder.addCase(updateProduct.pending,(state,action)=>{
             console.log("pending")
             state.isLoading=true;
@@ -124,7 +131,22 @@ export const productSlice = createSlice({
         builder.addCase(updateProduct.rejected,(state,action)=>{
             console.log("error",action.payload)
            state.isError=true
+        }),
+
+         // delete product 
+         builder.addCase(removeProduct.pending,(state,action)=>{
+            console.log("pending")
+            state.isLoading=true;
+        }),
+        builder.addCase(removeProduct.fulfilled,(state,action)=>{
+            console.log("fullfill")
+            state.Products = state.Products.filter((product)=>product.id != action.payload.id);
+        }),
+        builder.addCase(removeProduct.rejected,(state,action)=>{
+            console.log("error",action.payload)
+           state.isError=true
         })
+
     }
 
 })

@@ -52,7 +52,7 @@ const MagnifierZoomImage = ({ url, altText }) => {
       <img src={url} alt={altText} style={{width:'300px'}}/>
       </div>
       {isZoomed && (
-        <div className="zoomed-image" style={{zIndex:'90', width:'345px', backgroundImage: `url(${url})`, backgroundPosition: `calc(-${position.x}px - 200px) calc(-${position.y}px - 200px)`,backgroundRepeat:'no-repeat'   }} />
+        <div className="zoomed-image" style={{zIndex:'101', width:'345px', backgroundImage: `url(${url})`, backgroundPosition: `calc(-${position.x}px - 200px) calc(-${position.y}px - 200px)`,backgroundRepeat:'no-repeat'   }} />
       )}
     </div>
   );

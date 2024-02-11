@@ -175,15 +175,15 @@ const Modal = () => {
                       ></div>
                     </div>
                     {!ids.includes(product.id) && (
-                      <div className="product-detail__controller" style={{justifyContent:'left'}}>
+                      <div className="product-detail__controller" style={{justifyContent:'left',cursor:'pointer'}}>
                       <div className="product-detail__controler__actions"></div>
-                      <a className="btn -round -white" onClick={()=>addWish(product.id)}>
+                      <a className="btn -round -white" style={{marginTop:'5em'}} onClick={()=>addWish(product.id)}> 
                         <i className="fas fa-heart"></i>
                       </a>
                     </div>
                               )}
                               {ids.includes(product.id) && (
-                            <div className="product-detail__controller" style={{justifyContent:'left'}}>
+                            <div className="product-detail__controller" style={{justifyContent:'left',cursor:'pointer'}}>
                       <div className="product-detail__controler__actions"></div>
                       <a style={{background:'red',color:'white'}} className="btn -round -white"  onClick={()=>removeWish(product.id)}>
                         <i className="fas fa-heart"></i>
