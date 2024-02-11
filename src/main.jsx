@@ -14,12 +14,14 @@ import UserWishList from './components/UserWishList/UserWishList.jsx'
 import AdminProduct from './components/AdminProducts/AdminProduct.jsx'
 import AdminModal from './components/AdminProductDetails/AdminModal.jsx'
 import AddProduct from './components/Product/AddProduct.jsx'
+import AdminHeader from './components/AdminHeader/AdminHeader.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
      <Route path='' element={
       <>  
+        <Header/>
      <Content />
      <Modal />
      <LoginModal />
@@ -28,6 +30,7 @@ const router = createBrowserRouter(
      } />
      <Route path='admin' element={
       <>
+      <AdminHeader/>
       <AdminProduct/>
       <AdminModal/>
       <AddProduct/> 
@@ -36,6 +39,7 @@ const router = createBrowserRouter(
 
       <Route path='wishlist' element={
       <>
+        <Header/>
       <UserWishList/>
         </>
      } />

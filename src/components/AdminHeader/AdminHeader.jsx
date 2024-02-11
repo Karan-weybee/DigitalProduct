@@ -3,19 +3,15 @@ import { useSelector,useDispatch } from "react-redux";
 import { resetUserId } from "../../slices/userSlice";
 import { Link } from "react-router-dom";
 import { applySearch } from "../../slices/productSlice";
+import { useNavigate } from "react-router-dom";
 
-const Header = () => {
+const AdminHeader = () => {
   const dispatch = useDispatch();
+  const nevigate = useNavigate();
   const user = useSelector(state=>state.userSlice.user);
   const [search,setSearch]=useState('');
    
-  const openLoginModal = () => {
-    document.getElementById("loginModal").style.display = "block";
-  };
 
-  const logOut =()=>{
-  dispatch(resetUserId());
-  }
   const searchProduct = (e)=>{
     e.preventDefault();
    dispatch(applySearch(search))
@@ -30,17 +26,22 @@ const Header = () => {
   const showSearch=()=>{
     document.getElementById('search-box').classList.add('active')
   }
+
+  const goToHome =()=>{
+    dispatch(resetUserId())
+    nevigate('/')
+  }
   return (
     <div className="menu -style-3">
       <div className="container" style={{ overflow: "hidden" }}>
         <div className="menu__wrapper">
-          <Link to="/">
+          <Link onClick={goToHome}>
             <img src="assets/images/logo-white.png" alt="Logo" />
           </Link>
           <div className="navigator -white">
             <ul>
               <li className="relative">
-                <Link to="/">
+                <Link>
                   Home
                   <span className="dropable-icon">
                     <i className="fas fa-angle-down"></i>
@@ -49,10 +50,10 @@ const Header = () => {
                
               </li>
               <li>
-                <Link>Services</Link>
+                <Link >Services</Link>
               </li>
               <li>
-                <Link>About</Link>
+                <Link >About</Link>
               </li>
               <li>
                 <Link>
@@ -63,6 +64,7 @@ const Header = () => {
               <li>
                 <Link>Blog</Link>
               </li>
+              
             </ul>
           </div>
           <div className="menu-functions -white">
@@ -78,10 +80,9 @@ const Header = () => {
             
                 <input
                   type="text"
-                  placeholder="Search product"
+                  placeholder="Search"
                   name="search"
                   value={search}
-                  style={{paddingTop:'1.3em'}}
                   onChange={(e)=>{setSearch(e.target.value); dispatch(applySearch(e.target.value))}}
                 />
                 <button type="submit" style={{width:'70px'}} onClick={searchProduct}>
@@ -94,59 +95,7 @@ const Header = () => {
              
               </form>
             </div>
-            {user && (
-              <>
-            <Link className="menu-icon -wishlist" to="/wishlist">
-              <img
-                src="assets/images/header/wishlist-icon-white.png"
-                alt="Wishlist icon"
-              />
-            </Link>
-
-            <div className="menu-cart">
-            <Link className="menu-icon -cart" onClick={logOut}>
-              <img
-                src="./src/assets/images/header/logout.png"
-                alt="Wishlist icon"
-                style={{
-                  background: "white",
-                  borderRadius: "10px",
-                  padding: "1px",
-                }}
-              />
-              {/* <span className="cart__quantity">0</span> */}
-            </Link>
-            <h5>
-              <span></span>
-            </h5>
-          </div>
-          </>
-            )}
-            {!user && (
-            <div className="menu-cart">
-              <Link className="menu-icon -cart" onClick={openLoginModal}>
-                <img
-                  src="./src/assets/images/header/user.png"
-                  alt="Wishlist icon"
-                  style={{
-                    background: "white",
-                    borderRadius: "10px",
-                    padding: "1px",
-                  }}
-                />
-                {/* <span className="cart__quantity">0</span> */}
-              </Link>
-              <h5>
-                <span></span>
-              </h5>
-            </div>
-          
-            )}
-            <Link className="menu-icon -navbar" >
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-            </Link>
+           
           </div>
         </div>
       </div>
@@ -154,4 +103,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default AdminHeader;

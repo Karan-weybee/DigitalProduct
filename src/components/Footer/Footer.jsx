@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -7,9 +8,9 @@ const Footer = () => {
         <div className="container">
           <div className="footer-one__header">
             <div className="footer-one__header__logo">
-              <a href="/homepages/homepage1">
+              <Link>
                 <img src="assets/images/logo.png" alt="Logo" />
-              </a>
+              </Link>
             </div>
             <div className="footer-one__header__newsletter">
               <span>Subscribe Newletter:</span>
@@ -28,36 +29,32 @@ const Footer = () => {
               <div className="social-icons -border">
                 <ul>
                   <li>
-                    <a
-                      href="https://www.facebook.com/"
+                    <Link
                       style={{ color: "undefined" }}
                     >
                       <i className="fab fa-facebook-f"></i>
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="https://twitter.com"
+                    <Link
                       style={{ color: "undefined" }}
                     >
                       <i className="fab fa-twitter"></i>
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="https://instagram.com/"
+                    <Link
                       style={{ color: "undefined" }}
                     >
                       <i className="fab fa-instagram"> </i>
-                    </a>
+                    </Link>
                   </li>
                   <li>
-                    <a
-                      href="https://www.youtube.com/"
+                    <Link
                       style={{ color: "undefined" }}
                     >
                       <i className="fab fa-youtube"></i>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -90,19 +87,19 @@ const Footer = () => {
                       <h5 className="footer-title">Account</h5>
                       <ul>
                         <li>
-                          <a href="#">My account</a>
+                          <Link>My account</Link>
                         </li>
                         <li>
-                          <a href="wishlist.html">Wishlist</a>
+                          <Link>Wishlist</Link>
                         </li>
                         <li>
-                          <a href="cart">Cart</a>
+                          <Link>Cart</Link>
                         </li>
                         <li>
-                          <a href="fullwidth-4col">Shop</a>
+                          <Link>Shop</Link>
                         </li>
                         <li>
-                          <a href="checkout">Checkout</a>
+                          <Link >Checkout</Link>
                         </li>
                       </ul>
                     </div>
@@ -110,19 +107,19 @@ const Footer = () => {
                       <h5 className="footer-title">Infomation</h5>
                       <ul>
                         <li>
-                          <a href="about.html">About us</a>
+                          <Link >About us</Link>
                         </li>
                         <li>
-                          <a href="contact.html">Careers</a>
+                          <Link >Careers</Link>
                         </li>
                         <li>
-                          <a href="contact.html">Delivery Information</a>
+                          <Link >Delivery Information</Link>
                         </li>
                         <li>
-                          <a href="contact.html">Privacy Policy</a>
+                          <Link >Privacy Policy</Link>
                         </li>
                         <li>
-                          <a href="contact.html">Terms &amp; Condition</a>
+                          <Link >Terms &amp; Condition</Link>
                         </li>
                       </ul>
                     </div>
@@ -153,13 +150,13 @@ const Footer = () => {
               <p>© Copyright 2020 Beauty</p>
               <ul>
                 <li>
-                  <a href="contact.html">Privacy Policy</a>
+                  <Link >Privacy Policy</Link>
                 </li>
                 <li>
-                  <a href="contact.html">Terms &amp; Condition</a>
+                  <Link >Terms &amp; Condition</Link>
                 </li>
                 <li>
-                  <a href="contact.html">Site map</a>
+                  <Link >Site map</Link>
                 </li>
               </ul>
             </div>

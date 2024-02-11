@@ -4,18 +4,20 @@ import { useSelector,useDispatch } from "react-redux";
 import closeImage from '../../assets/images/close-image.png'
 import { addFeatureImages, fetchProduct, fetchProducts, updateProduct } from "../../slices/productSlice";
 import DropDownTag from "../Product/DropDownTag";
+import { useNavigate } from "react-router-dom";
 
 const AdminModal = () => {
     const dispatch = useDispatch();
-
+    const nevigate = useNavigate();
   
   const product = useSelector(state=>state.productSlice.Product);
   console.log(product)
 
-  const [selectedOptions, setSelectedOptions] = useState();
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const [name, setName] = useState();
   const [discription, setDiscription] = useState("");
   const [price,setPrice]=useState('');
+  const [isError,setIsError]=useState('')
 
   useEffect(()=>{
   setName(product.name)
@@ -53,7 +55,11 @@ const AdminModal = () => {
  
   const handleImageChange = (event) => {
 
+    
     const file = event.target.files[0];
+    if(file){
+        setIsError('')
+    }
     setSingleProductImage(file)
         const reader = new FileReader();
 
@@ -67,7 +73,13 @@ const AdminModal = () => {
   const handleMultiImages =(event)=>{
 
     const selectedImage = event.target.files;
-    
+    if(selectedImage.length>0){
+        setIsError('')  
+    }
+    else{
+        setIsError('Apply feature image')
+    }
+
     setMultipleProductImage((images)=>[...images,...selectedImage]);
     var promises = [];
 
@@ -102,6 +114,7 @@ const AdminModal = () => {
 
  function removeImage(index){
     console.log(index)
+  
     var allIdes=[...ids,index];
     setIds((ids)=>[...ids,index])
 
@@ -109,6 +122,10 @@ const AdminModal = () => {
   var images = image.filter((imagess, index) => !allIdes.includes(index));
     
     console.log(images)
+    if(images.length ==0){
+        setIsError("Add some feature image ..")
+    }
+    
     setMultipleProductImage(()=>[]);
 
     var promises = [];
@@ -133,7 +150,8 @@ const AdminModal = () => {
             const validFiles = files.filter(file => file !== null);
             setMultipleProductImage((images) => [...images, ...validFiles]);
         });
-  
+
+       
  }
 
 
@@ -156,6 +174,7 @@ const AdminModal = () => {
     });
 }
   const closeProductDetails = () => {
+    setIsError('')
     setProductImage(product.productImage);
     setIds(()=>[])
     dispatch(fetchProduct(product.id)).then(()=>{
@@ -223,7 +242,9 @@ const AdminModal = () => {
     }
   }
    const editProducts = (multipleProductImage,productImg)=>{
-
+   if(selectedOptions.length!= 0 && name != '' && discription != '' && price > 0){
+    if(isError == ''){
+     setIsError('');
     console.log(multipleProductImage)
     console.log("name :",name);
     console.log("discr.",discription);
@@ -243,9 +264,17 @@ const AdminModal = () => {
     formData.append('tags', tags);
     // formData.append(`featureImages`, [...multipleImage]);
     formData.append('productJson', `{"Id": ${product.id},"Name": "${name}","Discription":"${discription}","Price":${price}}`);
+   
     dispatch(updateProduct({"formData":formData,"id":product.id})).then(()=>{
         dispatch(fetchProduct(product.id));
     })
+    closeProductDetails();
+     }
+   }  
+   else{
+    setIsError("Enter valid data ...")
+   }
+
    }
     
   
@@ -285,7 +314,7 @@ const AdminModal = () => {
                                             rel="modal:close"
                                             class="close-modal "
                                             style={{ top: "2.5px",left:'0%' }}
-                                            onClick={()=>{setProductImage('')}}
+                                            onClick={()=>{setIsError("Apply product image"),setProductImage('')}}
                                         >
                                          Close
                                         </a>
@@ -306,7 +335,7 @@ const AdminModal = () => {
                                             rel="modal:close"
                                             class="close-modal "
                                             style={{ top: "2.5px",left:'0%' }}
-                                            onClick={()=>{setProductImage('')}}
+                                            onClick={()=>{setIsError("Apply product image"),setProductImage('')}}
                                         >
                                          Close
                                         </a>
@@ -325,7 +354,7 @@ const AdminModal = () => {
                                         rel="modal:close"
                                         class="close-modal "
                                         style={{ top: "2.5px",left:'0%'}}
-                                        onClick={()=>{setProductImage('')}}
+                                        onClick={()=>{setIsError("Apply product image"),setProductImage('')}}
                                     >
                                      Close
                                     </a>
@@ -483,24 +512,29 @@ const AdminModal = () => {
                     <p>03 review</p>
                     <a href="#">Write a reviews</a>
                   </div>
-                  <h3>$<input type="number" name="" id="" value={price} onChange={(e)=>setPrice(e.target.value)} style={{border:'1px',marginBottom:'1em'}}/>
+                  <h3>$<input type="number" min={1} name="" id="" value={price} onChange={(e)=>setPrice(e.target.value)} style={{border:'1px',marginBottom:'1em'}}/>
                     </h3>
                   <div className="divider"></div>
                   <div style={{marginBottom:'1em'}}>
                  < label htmlFor="" style={{display:'block',marginBottom:'1em'}}>Tags :</label>
                    <DropDownTag selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/>
                 </div>   
-                  <div className="product-detail__content__footer">
+               
+                  <div className="product-detail__content__footer" style={{marginTop:'1em'}}>
                     <ul>
                       <li>Brand:gucci</li>
                       <li>Product code: PM 01</li>
                       <li>Reward point: 30</li>
                       <li>Availability: In Stock</li>
                     </ul>
+                    <div>
+                    {isError != ''&& (
+                    <span style={{color:'red'}}>{isError}</span>
+                    )}
+                    </div>
+                    <div className="product-detail__controller" style={{marginTop:'1em'}}>
                     
-                    <div className="product-detail__controller">
-                      
-                      <div className="add-to-cart -dark">
+                      <div className="add-to-cart -dark" >
                         <a onClick={editProduct} className="btn -round -red" href="#">
                           <i className="fas fa-pencil-alt "></i>
                         </a>

@@ -4,13 +4,20 @@ import right from '../../assets/images/right.png'
 import wrong from '../../assets/images/close-image.png'
 import { useSelector,useDispatch } from "react-redux";
 import { fetchProduct, fetchProducts, removeProduct } from "../../slices/productSlice";
+import { useNavigate } from "react-router-dom";
 
 const AdminProduct = () => {
+    const user = useSelector(state=>state.userSlice.user);
+    console.log(user)
+    const nevigate = useNavigate();
     const dispatch = useDispatch();
     const products = useSelector((state)=>state.productSlice.Products)
     console.log(products)
 
     useEffect(()=>{
+     if(user!= 'admin'){
+       nevigate('/')
+     }
       dispatch(fetchProducts());
     },[])
 

@@ -121,6 +121,9 @@ const UserWishList = () => {
                           </button>
                         </li>
                       </ul>
+                      <div className='download' style={{marginTop:'1em'}}>
+                        <button className='btn btn-light-success' style={{background:'green',color:'white'}}>Download</button>
+                      </div>
                     </div>
                     </div>
                   

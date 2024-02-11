@@ -7,6 +7,7 @@ import { useDispatch,useSelector } from "react-redux";
 import { fetchProduct, fetchProducts } from "../../slices/productSlice";
 import { addWishList, fetchWishList, removeWishList } from "../../slices/wishListSlice";
 import {checkCommonElement} from '../../../src/helper/helper'
+import { Link } from "react-router-dom";
 
 const Content = () => {
   const user = useSelector(state=>state.userSlice.user)
@@ -105,7 +106,7 @@ setIds(id)
                       {checkCommonElement(category,product.tags) && (<>
                       {product.name.toLowerCase().includes(search.toLowerCase()) && (
                         <>
-                       { (price  && product.price>price[0] &&product.price<price[1]) && (
+                       { (price  && product.price>=price[0] &&product.price<price[1]) && (
                         
                     <div className="col-12 col-sm-6 col-lg-4" key={product.id}>
                       <div className="product">
@@ -113,9 +114,8 @@ setIds(id)
                           <h5 className="-new">New</h5>
                         </div> */}
                         <div className="product-thumb">
-                          <a
+                          <Link
                             className="product-thumb__image"
-                            // href=
                           >
                             <img
                               src={product.productImage}
@@ -125,36 +125,36 @@ setIds(id)
                               src={product.productImage}
                               alt="Product image"
                             />
-                          </a>
+                          </Link>
                           <div className="product-thumb__actions">
                            
                             <div className="product-btn">
-                              <a
+                              <Link
                                 className="btn -white product__actions__item -round product-qv"
                                 onClick={()=>showProductDetails(product.id)}
                               >
                                 <i className="fas fa-eye"></i>
-                              </a>
+                              </Link>
                             </div>
 
                             {!ids.includes(product.id) && (
                             <div className="product-btn">
-                              <a
+                              <Link
                                 className="btn -white product__actions__item -round"
                                 onClick={()=>addWish(product.id)}
                               >
                                 <i className="fas fa-heart"></i>
-                              </a>
+                              </Link>
                             </div>
                               )}
                               {ids.includes(product.id) && (
                             <div className="product-btn">
-                              <a style={{background:'red',color:'white'}}
+                              <Link style={{background:'red',color:'white'}}
                                 className="btn -white product__actions__item -round"
                                 onClick={()=>removeWish(product.id)}
                               >
                                 <i className="fas fa-heart"></i>
-                              </a>
+                              </Link>
                             </div>
                               )}
                           </div>
@@ -170,12 +170,11 @@ setIds(id)
                               <i className="far fa-star"></i>
                             </div>
                           </div>
-                          <a
+                          <Link
                             className="product-name"
-                            href="/shop/product-detail.html"
                           >
                             {product.discription}
-                          </a>
+                          </Link>
                           <div className="product-content__footer">
                             <h5 className="product-price--main">${product.price}</h5>
                             <div className="product-colors">

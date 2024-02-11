@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
-import { loginUser, signUpUser } from "../slices/userSlice";
+import { loginUser, setUserId, signUpUser } from "../slices/userSlice";
 import { fetchWishList } from "../slices/wishListSlice";
+import { useNavigate } from "react-router-dom";
 
 const LoginModal = () => {
   const dispatch = useDispatch();
-
+  const nevigate = useNavigate();
   const {user,isError}=useSelector(state=>state.userSlice);
 
   const closeLoginModal = () => {
@@ -15,13 +16,23 @@ const LoginModal = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
  const [nameType,setNameType]=useState("SignUp")
+
   const login = (e) => {
     e.preventDefault();
     console.log(email,password);
+
+   if(email == 'admin@gmail.com' && password== 'admin'){
+    console.log(email,password)
+    dispatch(setUserId({uid : 'admin'}));
+    nevigate('/admin');
+
+   }
+   else{
     dispatch(loginUser({email:email,password:password}));
     if(!isError){
         closeLoginModal();
       }
+    }
   };
 
 

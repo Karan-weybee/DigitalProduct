@@ -13,17 +13,24 @@ const AddProduct = () => {
   };
 
 
-  const [selectedOptions, setSelectedOptions] = useState();
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const [name, setName] = useState("");
   const [discription, setDiscription] = useState("");
   const [price,setPrice]=useState('');
   const [singleImage,setSingleImage]=useState('')
   const [multipleImage,setMultipleImage]=useState('')
+  const [isError,setIsError]=useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(event)
     if(event.key != 'Enter'){
+        if(selectedOptions.length == 0){
+            setIsError('Please apply tags ..')
+        }
+        else{
+            setIsError('')
+        
         var tags = selectedOptions.map((option)=>option.value).join(',')
         console.log(singleImage)
         console.log([...multipleImage])
@@ -40,6 +47,7 @@ const AddProduct = () => {
         formData.append('productJson', `{"Name": "${name}","Discription":"${discription}","Price":${price}}`);
 
         dispatch(addProduct(formData))
+    }
     }
   };
 
@@ -156,7 +164,11 @@ const AddProduct = () => {
                       </div>
 
                       <div className="input-validator"  >
-                      <label htmlFor="" style={{display:'block',marginBottom:'10px'}}>Tags :</label>
+                      <label htmlFor="" style={{display:'block',marginBottom:'10px'}}>Tags :
+                       {isError!='' && (
+                        <span style={{color:'red'}}>{isError}</span>
+                       )}
+                      </label>
                         <DropDownTag selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/>
                       </div>
 
