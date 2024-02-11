@@ -173,10 +173,13 @@ const AdminModal = () => {
 
         const blob= urlToBlob(product.productImage)
         .then(blob => {
-        const fileName = product.productImage.substring(product.productImage.lastIndexOf('/') + 1);
-        const fetchedFile = new File([blob], fileName, { type: blob.type});
-        productImg=fetchedFile;
             // return blob;
+            const fileName = product.productImage.substring(product.productImage.lastIndexOf('/') + 1);
+        const fetchedFile = new File([blob], fileName, { type: blob.type});
+        console.log(fetchedFile)
+        productImg=fetchedFile;
+        applyMultipleImages(productImg);
+        
         })
         .catch(error => {
             console.error(error);
@@ -184,8 +187,13 @@ const AdminModal = () => {
       
         
     }else{
-         console.log(singleProductImage)
+        // console.log(singleProductImage)
+        applyMultipleImages(productImg);
     }
+ 
+  }
+
+  const applyMultipleImages =(productImg)=>{
     if (multipleProductImage.length === 0) {
         var images = [];
         var promises = [];
@@ -206,56 +214,41 @@ const AdminModal = () => {
         Promise.all(promises)
             .then(() => {
                 console.log(images);
-                console.log("name :",name);
-                console.log("discr.",discription);
-                console.log("price:",price),
-                console.log(selectedOptions)
-                console.log(productImg)
-        
-                var tags = selectedOptions.map((option)=>option.value).join(',')
-                var Images= [...images]
-                const formData = new FormData();
-        
-                Images.forEach((file) => {
-                    formData.append(`featureImages`, file);
-                });
-                // Append form data to the FormData object
-                formData.append('file', productImg);
-                formData.append('tags', tags);
-                // formData.append(`featureImages`, [...multipleImage]);
-                formData.append('productJson', `{"Id": ${product.id},"Name": "${name}","Discription":"${discription}","Price":${price}}`);
-                dispatch(updateProduct({"formData":formData,"id":product.id})).then(()=>{
-                    dispatch(fetchProduct(product.id));
-                })
+               //multiple image is images
+               editProducts(images,productImg)
             });
     }else{
-        console.log(multipleProductImage)
-        console.log("name :",name);
-        console.log("discr.",discription);
-        console.log("price:",price),
-        console.log(selectedOptions)
-        console.log(productImg)
-
-        var tags = selectedOptions.map((option)=>option.value).join(',')
-        var Images= [...multipleProductImage]
-        const formData = new FormData();
-
-        Images.forEach((file) => {
-            formData.append(`featureImages`, file);
-        });
-        // Append form data to the FormData object
-        formData.append('file', productImg);
-        formData.append('tags', tags);
-        // formData.append(`featureImages`, [...multipleImage]);
-        formData.append('productJson', `{"Id": ${product.id},"Name": "${name}","Discription":"${discription}","Price":${price}}`);
-        dispatch(updateProduct({"formData":formData,"id":product.id})).then(()=>{
-            dispatch(fetchProduct(product.id));
-        })
+        // multiple image is available
+        editProducts(multipleProductImage,productImg)
     }
-
-   
-    
   }
+   const editProducts = (multipleProductImage,productImg)=>{
+
+    console.log(multipleProductImage)
+    console.log("name :",name);
+    console.log("discr.",discription);
+    console.log("price:",price),
+    console.log(selectedOptions)
+    console.log(productImg)
+
+    var tags = selectedOptions.map((option)=>option.value).join(',')
+    var Images= [...multipleProductImage]
+    const formData = new FormData();
+
+    Images.forEach((file) => {
+        formData.append(`featureImages`, file);
+    });
+    // Append form data to the FormData object
+    formData.append('file', productImg);
+    formData.append('tags', tags);
+    // formData.append(`featureImages`, [...multipleImage]);
+    formData.append('productJson', `{"Id": ${product.id},"Name": "${name}","Discription":"${discription}","Price":${price}}`);
+    dispatch(updateProduct({"formData":formData,"id":product.id})).then(()=>{
+        dispatch(fetchProduct(product.id));
+    })
+   }
+    
+  
   return (
     <>
       <div
