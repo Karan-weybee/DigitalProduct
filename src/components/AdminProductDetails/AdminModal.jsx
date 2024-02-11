@@ -173,17 +173,18 @@ const AdminModal = () => {
 
         const blob= urlToBlob(product.productImage)
         .then(blob => {
-            return blob;
+        const fileName = product.productImage.substring(product.productImage.lastIndexOf('/') + 1);
+        const fetchedFile = new File([blob], fileName, { type: blob.type});
+        productImg=fetchedFile;
+            // return blob;
         })
         .catch(error => {
             console.error(error);
         });
       
-        const fileName = product.productImage.substring(product.productImage.lastIndexOf('/') + 1);
-        const fetchedFile = new File([blob], fileName, { type:'image/png'});
-        productImg=fetchedFile;
+        
     }else{
-        // console.log(singleProductImage)
+         console.log(singleProductImage)
     }
     if (multipleProductImage.length === 0) {
         var images = [];
