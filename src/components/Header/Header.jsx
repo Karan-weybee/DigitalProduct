@@ -66,6 +66,17 @@ const Header = () => {
             </ul>
           </div>
           <div className="menu-functions -white">
+          <Link className="menu-icon -navbar" >
+              
+              <Link className="menu-icon" onClick={showSearch}>
+              <img
+                src="assets/images/header/search-icon-white.png"
+                alt="Search icon"
+              />
+              
+            </Link>
+             
+            </Link>
             <Link className="menu-icon -search" onClick={showSearch}>
               <img
                 src="assets/images/header/search-icon-white.png"
@@ -142,11 +153,7 @@ const Header = () => {
             </div>
           
             )}
-            <Link className="menu-icon -navbar" >
-              <div className="bar"></div>
-              <div className="bar"></div>
-              <div className="bar"></div>
-            </Link>
+            
           </div>
         </div>
       </div>

@@ -497,8 +497,8 @@ const AdminModal = () => {
                 <div className="product-detail__content">
                   <div className="product-detail__content__header">
                     {/* <h5>{product.name}</h5> */}
-                    <input type="text" name="" id="" value={name} onChange={(e)=>setName(e.target.value)} style={{fontSize:'20px',border:'1px',marginBottom:'0.1em'}}/>
-                    <input type="text" name="" id="" value={discription} onChange={(e)=>setDiscription(e.target.value)} style={{fontSize:'16px',border:'1px',marginBottom:'1em'}}/>
+                    <input type="text" name="" id="" value={name} onChange={(e)=>setName(e.target.value)} style={{fontSize:'20px',paddingTop:'5px',marginBottom:'0.5em',borderRadius:'8px',border:'2px solid rgb(243 239 239)'}}/>
+                    <input type="text" name="" id="" value={discription} onChange={(e)=>setDiscription(e.target.value)} style={{fontSize:'16px',border:'1px solid rgb(243 239 239)', padding:'5px',borderRadius:'8px',marginBottom:'1.3em',width:'100%'}}/>
                     
                   </div>
                   <div className="product-detail__content__header__comment-block">
