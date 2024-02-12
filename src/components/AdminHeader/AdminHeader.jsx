@@ -11,7 +11,6 @@ const AdminHeader = () => {
   const user = useSelector(state=>state.userSlice.user);
   console.log(user)
   const [search,setSearch]=useState('');
-   
 
   const searchProduct = (e)=>{
     e.preventDefault();

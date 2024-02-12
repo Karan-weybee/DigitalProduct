@@ -26,7 +26,6 @@ const Content = () => {
 
   useEffect(()=>{
      if(priceRange){
-      console.log("sgdhghjggh")
       setPrice(priceRange)
      }
   },[priceRange])

@@ -28,22 +28,24 @@ const LoginModal = () => {
    }
    else{
     dispatch(loginUser({email:email,password:password}));
+    setEmail('')
+    setPassword('')
     }
   };
   
-  useEffect(()=>{
+   useEffect(()=>{
     if(isError == ''){
-        console.log("dfghdfjkghjdfghjfdhgj")
         closeLoginModal();
       }
-  },[isError])
+   },[isError])
 
   const signUp = (e) => {
     e.preventDefault();
     console.log("submit sign up");
     console.log(email,password);
     dispatch(signUpUser({email:email,password:password}));
-   
+    setEmail('')
+    setPassword('')
   };
 
   return (

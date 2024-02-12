@@ -71,8 +71,6 @@ const Categories = () => {
                         Close
                       </a>
                     </div>
-
-                  
                   </div>
                   <div className="shop-sidebar__section -refine">
                    

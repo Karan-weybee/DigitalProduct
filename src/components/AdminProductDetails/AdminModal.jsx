@@ -5,6 +5,7 @@ import closeImage from '../../assets/images/close-image.png'
 import { addFeatureImages, fetchProduct, fetchProducts, updateProduct } from "../../slices/productSlice";
 import DropDownTag from "../Product/DropDownTag";
 import { useNavigate } from "react-router-dom";
+import image from '../../assets/images/image.png'
 
 const AdminModal = () => {
     const dispatch = useDispatch();
@@ -286,13 +287,12 @@ const AdminModal = () => {
         style={{ opacity: "1", display: "none", zIndex: "80" }}
       >
         <div
-          className="modal"
+          className="modal editProductModal"
           id="quick-view-modal"
           style={{
             opacity: "1",
             display: "inline-block",
-            height: "77%",
-            overflow: "scroll",
+            height: "77%"
           }}
         >
           <div className="product-quickview show">
@@ -370,6 +370,10 @@ const AdminModal = () => {
                             }
                            {
                            productImage =='' &&(
+                            <div className="upload-image">
+                             <label for="singleImage" class="file-label">
+                            <img src={image} alt="" srcset="" />
+                            </label>
                             <input
                             className="p-0"
                               type="file"
@@ -378,8 +382,10 @@ const AdminModal = () => {
                               required="required"
                               id="singleImage"
                               accept="image/*"
+                             
                               onChange={handleImageChange} 
                             />
+                            </div>
                             )}
                         </div>
                       </div>

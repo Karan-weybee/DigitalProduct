@@ -6,7 +6,6 @@ import { addProduct, fetchProducts } from "../../slices/productSlice";
 const AddProduct = () => {
     const dispatch = useDispatch();
 
-
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [name, setName] = useState("");
   const [discription, setDiscription] = useState("");

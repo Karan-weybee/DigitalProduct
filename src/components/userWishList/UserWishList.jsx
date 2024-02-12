@@ -3,6 +3,7 @@ import Footer from '../Footer/Footer';
 import { useDispatch,useSelector } from 'react-redux';
 import { fetchWishList, removeWishList } from '../../slices/wishListSlice';
 import { useNavigate } from 'react-router-dom';
+import Pagination from '../content/Pagination';
 
 const UserWishList = () => {
     const nevigater = useNavigate();
@@ -37,10 +38,8 @@ const UserWishList = () => {
    }
     return (
             <>
-            
              <div className="shop" style={{marginTop:'2em'}}>
                 <div className="container">
-                     
                       <div className="shop-products">
                         <div className="shop-products__gird">
                           <div className="row mx-n1 mx-lg-n3">
@@ -65,8 +64,7 @@ const UserWishList = () => {
                                       src={wishproduct.productImage}
                                       alt="Product image"
                                     />
-                                  </a>
-                                  
+                                  </a> 
                                 </div>
                                 <div className="product-content">
                                   <div className="product-content__header">
@@ -91,42 +89,25 @@ const UserWishList = () => {
                                     <div className="product-colors" >
                                <a onClick={()=>removeItem(wishproduct.id)} 
                                style={{background:'red',color:'white',padding:'10px 17px',cursor:'pointer'}}
-                                className="btn -white product__actions__item -round"
-                                
-                              >
+                                className="btn -white product__actions__item -round" >
                                 <i className="fas fa-heart" style={{marginTop:'6px',marginLeft:'2px'}}></i>
                               </a>
-                            </div>
+                             </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
                              )) 
-
                             }
                           </div>
-                        </div>
-                        
+                        </div> 
                       </div>
-                      <ul className="paginator">
-                        <li className="page-item active">
-                          <button className="page-link">1</button>
-                        </li>
-                        <li className="page-item">
-                          <button className="page-link">2</button>
-                        </li>
-                        <li className="page-item">
-                          <button className="page-link">
-                            <i className="far fa-angle-right"></i>
-                          </button>
-                        </li>
-                      </ul>
+                      <Pagination/>
                       <div className='download' style={{marginTop:'1em'}}>
                         <button className='btn btn-light-success' style={{background:'green',color:'white'}}>Download</button>
                       </div>
                     </div>
                     </div>
-                  
                     <Footer />
             </>
           );

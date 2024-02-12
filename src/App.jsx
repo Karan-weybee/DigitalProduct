@@ -9,7 +9,6 @@ import AdminModal from "./components/AdminProductDetails/AdminModal";
 import AddProduct from "./components/Product/AddProduct";
 import UserWishList from "./components/UserWishList/UserWishList";
 import { Outlet } from "react-router-dom";
-// import EditProduct from "./components/Product/EditProduct";
 
 function App() {
   return (
