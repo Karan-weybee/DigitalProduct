@@ -17,7 +17,7 @@ const Categories = () => {
     dispatch(setCategories(tags));
     }
   },[selectedOptions])
-
+  
     const openFilter = () => {
         document.getElementById("categoryFilter").style.animationName =
           "openFilter";

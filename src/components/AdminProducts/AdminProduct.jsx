@@ -15,7 +15,7 @@ const AdminProduct = () => {
     console.log(products)
 
     useEffect(()=>{
-     if(user!= 'admin'){
+     if(user!= 0){
        nevigate('/')
      }
       dispatch(fetchProducts());

@@ -6,6 +6,7 @@ import { addFeatureImages, fetchProduct, fetchProducts, updateProduct } from "..
 import DropDownTag from "../Product/DropDownTag";
 import { useNavigate } from "react-router-dom";
 import image from '../../assets/images/image.png'
+import arrow from '../../assets/images/right-arrow.png'
 import '../../assets/css/productUpdate.css'
 
 const AdminModal = () => {
@@ -547,10 +548,16 @@ const AdminModal = () => {
                     </ul>
                     <div>
                     {isError != ''&& (
-                    <span style={{color:'red'}}>{isError}</span>
+                        <div style={{display:'flex',gap:'10px'}}><img src={arrow} alt="" />
+                    <span style={{color:'red',paddingTop:'4px'}}>{isError}</span>
+                    </div>
                     )}
                     {isMultiImageError != '' && (
-                         <span style={{color:'red',display:'block',marginTop:'0.2em'}}>{isMultiImageError}</span>
+                    <>
+                          <div style={{display:'flex',gap:'10px',marginTop:'10px'}}><img src={arrow} alt="" />
+                          <span style={{color:'red',paddingTop:'4px'}}>{isMultiImageError}</span>
+                          </div>
+                          </>
                     )}
                     </div>
                     <div className="product-detail__controller" style={{marginTop:'1em'}}>

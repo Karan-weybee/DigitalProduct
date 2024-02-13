@@ -21,18 +21,21 @@ const LoginModal = () => {
     e.preventDefault();
     console.log(email,password);
 
-   if(email == 'admin@gmail.com' && password== 'admin'){
-    console.log(email,password)
-    dispatch(setUserId({uid : 'admin'}));
-    nevigate('/admin');
-   }
-   else{
+//    if(email == 'admin@gmail.com' && password== 'admin'){
+//     console.log(email,password)
+//     dispatch(setUserId({uid : 'admin'}));
+//     nevigate('/admin');
+//    }
+//    else{
     dispatch(loginUser({email:email,password:password}));
-    }
+    // }
   };
   
    useEffect(()=>{
     if(isError == ''){
+        if(user == 0){
+            nevigate('/admin');
+        }
         closeLoginModal();
       }
    },[isError])

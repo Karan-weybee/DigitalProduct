@@ -17,12 +17,12 @@ function PriceRangeSlider() {
   };
 
   return (
-    <div className="price-range-slider" style={{marginTop:'1em'}}>
+    <div className="price-range-slider" style={{marginTop:'1em',position:'relative',zIndex:'0'}}>
       <label htmlFor="priceRange">Price Range:</label>
       <Slider
         min={0}
         max={maxLimit}
-        value={priceRange}
+        value={priceRange} 
         onChange={handlePriceRangeChange}
         className="custom-slider"
       />
