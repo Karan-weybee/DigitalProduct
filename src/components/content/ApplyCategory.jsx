@@ -31,7 +31,7 @@ const ApplyCategory = () => {
                     }
                   </h5>
                 </div>
-                <select className="customed-select" name="#">
+                <select className="customed-select" name="#" style={{display:'none'}}>
                   <option value="az">A to Z</option>
                   <option value="za">Z to A</option>
                   <option value="low-high">Low to High Price</option>

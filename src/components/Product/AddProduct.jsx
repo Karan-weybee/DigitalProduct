@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DropDownTag from "./DropDownTag";
 import { useDispatch,useSelector} from "react-redux";
 import { addProduct, fetchProducts } from "../../slices/productSlice";
+// import { ToastContainer, toast } from "react-toastify";
 
 const AddProduct = () => {
     const dispatch = useDispatch();
@@ -48,6 +49,7 @@ const AddProduct = () => {
         formData.append('productJson', `{"Name": "${name}","Discription":"${discription}","Price":${price}}`);
 
         dispatch(addProduct(formData))
+        alert("Product added !!");
     }
     }
   };
@@ -191,6 +193,7 @@ const AddProduct = () => {
           </div>
         </div>
       </div>
+     
     </div>
   );
 };

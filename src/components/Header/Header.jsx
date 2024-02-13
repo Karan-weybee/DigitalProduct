@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector,useDispatch } from "react-redux";
-import { resetUserId } from "../../slices/userSlice";
+import { resetError, resetUserId } from "../../slices/userSlice";
 import { Link } from "react-router-dom";
 import { applySearch } from "../../slices/productSlice";
 
@@ -15,6 +15,7 @@ const Header = () => {
 
   const logOut =()=>{
   dispatch(resetUserId());
+  dispatch(resetError())
   }
   const searchProduct = (e)=>{
     e.preventDefault();

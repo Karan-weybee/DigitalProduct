@@ -50,6 +50,9 @@ export const userSlice = createSlice({
         resetUserId:(state)=>{
             state.user=null;
             console.log(state.user)
+        },
+        resetError:(state,action)=>{
+         state.isError=null;
         }
     },
     extraReducers: (builder)=>{
@@ -93,6 +96,6 @@ export const userSelector = {
     }
 }
 
-export const {setUserId,resetUserId} = userSlice.actions
+export const {setUserId,resetUserId,resetError} = userSlice.actions
 
 export default userSlice.reducer

@@ -14,7 +14,7 @@ const Modal = () => {
   console.log(product)
   const closeProductDetails = () => {
     document.getElementById("productDetails").style.display = "none";
-  };
+  };  
  
   useEffect(()=>{
     setUrl(product.productImage)
@@ -32,13 +32,14 @@ const Modal = () => {
    console.log(wishList)
   
    useEffect(()=>{
+    if(user){
   if(wishList.length>0){
     var id=[];
     wishList.forEach(wish => {
       id.push(wish.productId)
    })
   setIds(id)
-  }
+  }}
    },[wishList])
 
    const removeWish = (id)=>{
@@ -185,7 +186,7 @@ const Modal = () => {
                               {ids.includes(product.id) && (
                             <div className="product-detail__controller" style={{justifyContent:'left',cursor:'pointer'}}>
                       <div className="product-detail__controler__actions"></div>
-                      <a style={{background:'red',color:'white'}} className="btn -round -white"  onClick={()=>removeWish(product.id)}>
+                      <a style={{background:'red',color:'white',marginTop:'5em'}} className="btn -round -white"  onClick={()=>removeWish(product.id)}>
                         <i className="fas fa-heart"></i>
                       </a>
                     </div>

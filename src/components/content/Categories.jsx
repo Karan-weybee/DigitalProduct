@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setCategories } from '../../slices/productSlice';
 import '../../assets/css/priceRange.css'
 import PriceRangeSlider from './PriceRangeSlider';
+import SearchDropDown from './SearchDropDown';
 
 const Categories = () => {
   
@@ -18,12 +19,11 @@ const Categories = () => {
   },[selectedOptions])
 
     const openFilter = () => {
-        // document.getElementById("categoryFilter").style.bottom = "-0%";
         document.getElementById("categoryFilter").style.animationName =
           "openFilter";
         setTimeout(() => {
           document.getElementById("categoryFilter").style.bottom = "0%";
-        }, 2000);
+        }, 1500);
         document.getElementById("filter").style.bottom = "-4%";
       };
     
@@ -31,7 +31,7 @@ const Categories = () => {
         document.getElementById("categoryFilter").style.animationName =
           "closeFilter";
         setTimeout(() => {
-          document.getElementById("categoryFilter").style.bottom = "-90%";
+          document.getElementById("categoryFilter").style.bottom = "-93%";
         }, 2000);
         document.getElementById("filter").style.bottom = "0%";
       };
@@ -75,7 +75,8 @@ const Categories = () => {
                   <div className="shop-sidebar__section -refine">
                    
                     <div className="shop-sidebar__section__item">
-                    <DropDownTag selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/>
+                    {/* <DropDownTag selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/> */}
+                    <SearchDropDown selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/>
                      
                       {/* <h5>Brand</h5> */}
                       {/* <ul>
@@ -116,7 +117,11 @@ const Categories = () => {
                       </ul> */}
                     </div>
                     <div className="shop-sidebar__section__item">
-                      <h5>Price</h5>
+                    <h2 style={{fontWeight:'500',marginBottom:'0.2em'}}>Price :-</h2>
+                      <img
+                        src="assets/images/introduction/IntroductionOne/content-deco.png"
+                        alt="Decoration"
+                      />
                      <PriceRangeSlider/>
                     </div>
                   </div>

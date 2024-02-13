@@ -28,8 +28,6 @@ const LoginModal = () => {
    }
    else{
     dispatch(loginUser({email:email,password:password}));
-    setEmail('')
-    setPassword('')
     }
   };
   

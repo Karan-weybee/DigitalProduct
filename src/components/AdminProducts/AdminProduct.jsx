@@ -47,7 +47,7 @@ const AdminProduct = () => {
         <div className="container">
               <div className="shop-header">
                 <div className="shop-header__view">
-                  <div className="shop-header__view__icon">
+                  <div className="shop-header__view__icon" style={{display:'none'}}>
                     <a className="active" href="#">
                       <i className="fas fa-th"></i>
                     </a>
@@ -55,12 +55,12 @@ const AdminProduct = () => {
                       <i className="fas fa-bars"></i>
                     </a>
                   </div>
-                  <h5 className="shop-header__page">
+                  <h5 className="shop-header__page" style={{marginLeft:'-11%'}}>
                    <button className="btn -light-green m-4" onClick={openAddProduct}> Add Product</button>
                   </h5>
                  
                 </div>
-                <select className="customed-select m-4" name="#">
+                <select className="customed-select m-4" name="#" style={{display:'none'}}>
                   <option value="az">A to Z</option>
                   <option value="za">Z to A</option>
                   <option value="low-high">Low to High Price</option>

@@ -6,6 +6,7 @@ import { addFeatureImages, fetchProduct, fetchProducts, updateProduct } from "..
 import DropDownTag from "../Product/DropDownTag";
 import { useNavigate } from "react-router-dom";
 import image from '../../assets/images/image.png'
+import '../../assets/css/productUpdate.css'
 
 const AdminModal = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const AdminModal = () => {
   const [discription, setDiscription] = useState("");
   const [price,setPrice]=useState('');
   const [isError,setIsError]=useState('')
+  const [isMultiImageError,setIsMultiImageError] = useState('');
 
   useEffect(()=>{
   setName(product.name)
@@ -75,10 +77,10 @@ const AdminModal = () => {
 
     const selectedImage = event.target.files;
     if(selectedImage.length>0){
-        setIsError('')  
+        setIsMultiImageError('')  
     }
     else{
-        setIsError('Apply feature image')
+        setIsMultiImageError('Apply feature image')
     }
 
     setMultipleProductImage((images)=>[...images,...selectedImage]);
@@ -124,7 +126,7 @@ const AdminModal = () => {
     
     console.log(images)
     if(images.length ==0){
-        setIsError("Add some feature image ..")
+        setIsMultiImageError("Add some feature image ..")
     }
     
     setMultipleProductImage(()=>[]);
@@ -176,6 +178,7 @@ const AdminModal = () => {
 }
   const closeProductDetails = () => {
     setIsError('')
+    setIsMultiImageError('')
     setProductImage(product.productImage);
     setIds(()=>[])
     dispatch(fetchProduct(product.id)).then(()=>{
@@ -213,6 +216,12 @@ const AdminModal = () => {
  
   }
 
+  useEffect(()=>{
+
+    if(name !=''&&discription != ''&&price>0){
+        setIsError('');
+    }
+  },[name,discription,price])
   const applyMultipleImages =(productImg)=>{
     if (multipleProductImage.length === 0) {
         var images = [];
@@ -244,8 +253,9 @@ const AdminModal = () => {
   }
    const editProducts = (multipleProductImage,productImg)=>{
    if(selectedOptions.length!= 0 && name != '' && discription != '' && price > 0){
-    if(isError == ''){
+    if(isError == '' && isMultiImageError == ''){
      setIsError('');
+     setIsMultiImageError('')
     console.log(multipleProductImage)
     console.log("name :",name);
     console.log("discr.",discription);
@@ -269,13 +279,15 @@ const AdminModal = () => {
     dispatch(updateProduct({"formData":formData,"id":product.id})).then(()=>{
         dispatch(fetchProduct(product.id));
     })
-    closeProductDetails();
+    dispatch(fetchProducts()).then(()=>{
+        closeProductDetails();
+    })
      }
    }  
    else{
-    setIsError("Enter valid data ...")
+    setIsError("Fill all valid data ...")
    }
-
+  
    }
     
   
@@ -375,14 +387,14 @@ const AdminModal = () => {
                             <img src={image} alt="" srcset="" />
                             </label>
                             <input
-                            className="p-0"
+                            className="p-0 singleImage"
                               type="file"
                               placeholder="Product price"
                               name="singleImage"
                               required="required"
                               id="singleImage"
                               accept="image/*"
-                             
+                               
                               onChange={handleImageChange} 
                             />
                             </div>
@@ -503,8 +515,8 @@ const AdminModal = () => {
                 <div className="product-detail__content">
                   <div className="product-detail__content__header">
                     {/* <h5>{product.name}</h5> */}
-                    <input type="text" name="" id="" value={name} onChange={(e)=>setName(e.target.value)} style={{fontSize:'20px',paddingTop:'5px',marginBottom:'0.5em',borderRadius:'8px',border:'2px solid rgb(243 239 239)'}}/>
-                    <input type="text" name="" id="" value={discription} onChange={(e)=>setDiscription(e.target.value)} style={{fontSize:'16px',border:'1px solid rgb(243 239 239)', padding:'5px',borderRadius:'8px',marginBottom:'1.3em',width:'100%'}}/>
+                    <input type="text" placeholder="Enter product name" name="" id="" value={name} onChange={(e)=>setName(e.target.value)} style={{fontSize:'20px',paddingTop:'5px',marginBottom:'0.5em',borderRadius:'8px',border:'2px solid rgb(243 239 239)'}}/>
+                    <input type="text" placeholder="Enter product discription" name="" id="" value={discription} onChange={(e)=>setDiscription(e.target.value)} style={{fontSize:'16px',border:'1px solid rgb(243 239 239)', padding:'5px',borderRadius:'8px',marginBottom:'1.3em',width:'100%'}}/>
                     
                   </div>
                   <div className="product-detail__content__header__comment-block">
@@ -537,6 +549,9 @@ const AdminModal = () => {
                     {isError != ''&& (
                     <span style={{color:'red'}}>{isError}</span>
                     )}
+                    {isMultiImageError != '' && (
+                         <span style={{color:'red',display:'block',marginTop:'0.2em'}}>{isMultiImageError}</span>
+                    )}
                     </div>
                     <div className="product-detail__controller" style={{marginTop:'1em'}}>
                     
@@ -546,7 +561,6 @@ const AdminModal = () => {
                         </a>
                         <h5>Edit</h5>
                       </div>
-                     
                     </div>
                   </div>
                 </div>

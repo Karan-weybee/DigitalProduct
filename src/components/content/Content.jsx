@@ -20,7 +20,7 @@ const Content = () => {
   const category= useSelector(state=>state.productSlice.categories);
   const dispatch = useDispatch();
   const [ids,setIds]=useState([])
-  const {Products} = useSelector(state => state.productSlice)
+  const {Products,isLoading} = useSelector(state => state.productSlice)
   console.log(Products)
 
 
@@ -101,14 +101,17 @@ if(wishList.length>0){
               <div className="shop-products">
                 <div className="shop-products__gird">
                   <div className="row">
-
+                 {isLoading && (
+                  <div style={{color:'green',fontSize:'20px',margin:'auto'}}>Loading ...</div>
+                 )}
+                
                     {Products.length > 0 && 
                     Products.map((product)=>(
                       <>
                       {checkCommonElement(category,product.tags) && (<>
                       {product.name.toLowerCase().includes(search.toLowerCase()) && (
                         <>
-                       { (price  && product.price>=price[0] &&product.price<price[1]) && (
+                       { (price  && product.price>=price[0] && product.price<=price[1]) && (
                         
                     <div className="col-12 col-sm-6 col-lg-4" key={product.id}>
                       <div className="product">
