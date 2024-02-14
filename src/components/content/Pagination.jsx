@@ -3,7 +3,7 @@ import React from 'react';
 const Pagination = () => {
     return (
         <div>
-            <ul className="paginator">
+            {/* <ul className="paginator">
                 <li className="page-item active">
                   <button className="page-link">1</button>
                 </li>
@@ -15,7 +15,7 @@ const Pagination = () => {
                     <i className="far fa-angle-right"></i>
                   </button>
                 </li>
-              </ul>
+              </ul> */}
         </div>
     );
 }

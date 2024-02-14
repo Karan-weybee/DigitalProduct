@@ -14,6 +14,7 @@ const Content = () => {
   const priceRange = useSelector(state=>state.productSlice.pricerange)
   console.log(priceRange)
   const [price,setPrice] = useState([0,10000])
+  const [count,setCount]=useState(0);
   console.log(price)
   const search = useSelector(state=>state.productSlice.search);
   console.log(search)
@@ -23,6 +24,36 @@ const Content = () => {
   const {Products,isLoading} = useSelector(state => state.productSlice)
   console.log(Products)
 
+  let lastScrollTop = 150;
+  let debounceTimer;
+  
+  function debounce(func, delay) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(func, delay);
+      
+  }
+  
+  window.addEventListener('scroll', function() {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+   
+      debounce(function() {
+          
+          if (scrollTop >= lastScrollTop) {
+              // Scrolling down
+              console.log(scrollTop);
+              if(scrollTop == count){
+                setCount((counts)=>counts+scrollTop)
+              }
+              setCount(scrollTop)
+          }
+         
+      },2000); // 2 second debounce delay
+      lastScrollTop = scrollTop <= lastScrollTop ? lastScrollTop : scrollTop-1;
+  });
+  
+  useEffect(()=>{
+   dispatch(fetchProducts())
+  },[count])
 
   useEffect(()=>{
      if(priceRange){
@@ -36,8 +67,8 @@ const Content = () => {
 
   useEffect(()=>{
     dispatch(fetchProducts());
-   
   },[])
+
 
   useEffect(()=>{
     console.log("user",user)

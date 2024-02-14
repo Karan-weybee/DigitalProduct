@@ -60,9 +60,10 @@ console.log(customOptions)
               value={selectedOptions}
               onChange={handleChange}
               onInputChange={handleInputChange}
-                placeholder="Tags"
+              placeholder="Tags"
               isClearable
-             closeMenuOnSelect={false}
+              closeMenuOnSelect={false}
+              openMenuOnFocus    
              />
         </div>
     );

@@ -23,12 +23,11 @@ const AdminProduct = () => {
 
   const showProductDetails = (id) => {
     dispatch(fetchProduct(id)).then(()=>{
-            document.getElementById("adminProductDetails").style.display ='block';
+        document.getElementById("adminProductDetails").style.display ='block';
     })
   };
  
   const openAddProduct = ()=>{
-
     document.getElementById("ProductAdd").style.display ='block';
   }
 

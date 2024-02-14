@@ -10745,7 +10745,7 @@ a.close-modal {
   border: 1px;
   margin-top: 1px;
   height: 18px;
-  
+  padding-right: 1px;
 }
 #ImageForZoom{
   margin: auto;
