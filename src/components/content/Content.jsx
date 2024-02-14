@@ -13,7 +13,7 @@ const Content = () => {
   const user = useSelector(state=>state.userSlice.user)
   const priceRange = useSelector(state=>state.productSlice.pricerange)
   console.log(priceRange)
-  const [price,setPrice] = useState([0,10000])
+  const [price,setPrice] = useState([])
   const [count,setCount]=useState(0);
   console.log(price)
   const search = useSelector(state=>state.productSlice.search);
@@ -30,7 +30,6 @@ const Content = () => {
   function debounce(func, delay) {
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(func, delay);
-      
   }
   
   window.addEventListener('scroll', function() {

@@ -5,7 +5,7 @@ const initialState = {
     Product:{},
     categories:[],
     minmax:[],
-    pricerange:[0,10000],
+    pricerange:[],
     search:'',
     isLoading:false,
     isError:false
@@ -94,6 +94,7 @@ export const productSlice = createSlice({
         }, state.Products[0].price);
 
         state.minmax = [minPrice,maxPrice]
+        state.pricerange =  [minPrice,maxPrice]
         }),
         builder.addCase(fetchProducts.rejected,(state,action)=>{
             console.log("error",action.payload)

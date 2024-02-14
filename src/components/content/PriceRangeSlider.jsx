@@ -13,8 +13,6 @@ function PriceRangeSlider() {
   const [maxLimit,setMaxLimit]=useState();
   const [minLimit,setMinLimit]=useState();
   
-  // const maxLimit = 10000;
- 
   const handlePriceRangeChange = (value) => {
     setPriceRange(value)
     dispatch(applyPriceRange(value));

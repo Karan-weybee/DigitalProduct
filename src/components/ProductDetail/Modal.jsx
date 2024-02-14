@@ -86,7 +86,7 @@ const Modal = () => {
               <div className="col-12 col-md-6">
                 <div className="product-detail__slide-one">
                   <div className="slider-wrapper slick-initialized slick-slider slick-dotted">
-                    <div className="slick-list draggable" id="zoomId" style={{ width: '692px',height:'345px',
+                    <div className="slick-list draggable" id="zoomId" style={{ width: '692px',height:'390px',
                  zIndex:'90'}}>
                      {url && (
                           // <img
