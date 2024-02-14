@@ -1,24 +1,10 @@
-import React,{useEffect, useState} from 'react';
-import DropDownTag from '../Product/DropDownTag';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCategories } from '../../slices/productSlice';
+import React from 'react';
 import '../../assets/css/priceRange.css'
 import PriceRangeSlider from './PriceRangeSlider';
 import SearchDropDown from './SearchDropDown';
 
 const Categories = () => {
-  
-  const dispatch = useDispatch();
-  const selectedTag = useSelector(state=>state.productSlice.categories);
-  const [selectedOptions, setSelectedOptions] = useState();
-  
-  useEffect(()=>{
-    if(selectedOptions){
-    // var tags = selectedOptions.map((option)=>option.value);
-    // dispatch(setCategories(tags));
-    }
-  },[selectedOptions])
-  
+
     const openFilter = () => {
         document.getElementById("categoryFilter").style.animationName =
           "openFilter";
@@ -79,43 +65,7 @@ const Categories = () => {
                     {/* <DropDownTag selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/> */}
                     <SearchDropDown/>
                      
-                      {/* <h5>Brand</h5> */}
-                      {/* <ul>
-                        <li>
-                          <label htmlFor="brand-0">
-                            <input type="checkbox" name="Gucci" id="brand-0" />
-                            Gucci
-                          </label>
-                        </li>
-                        <li>
-                          <label htmlFor="brand-1">
-                            <input type="checkbox" name="Dolce" id="brand-1" />
-                            Dolce
-                          </label>
-                        </li>
-                        <li>
-                          <label htmlFor="brand-2">
-                            <input
-                              type="checkbox"
-                              name="H&amp;M"
-                              id="brand-2"
-                            />
-                            H&amp;M
-                          </label>
-                        </li>
-                        <li>
-                          <label htmlFor="brand-3">
-                            <input type="checkbox" name="Kenzo" id="brand-3" />
-                            Kenzo
-                          </label>
-                        </li>
-                        <li>
-                          <label htmlFor="brand-4">
-                            <input type="checkbox" name="Prada" id="brand-4" />
-                            Prada
-                          </label>
-                        </li>
-                      </ul> */}
+                     
                     </div>
                     <div className="shop-sidebar__section__item">
                     <h2 style={{fontWeight:'500',marginBottom:'0.2em'}}>Price :-</h2>

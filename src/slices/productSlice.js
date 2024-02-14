@@ -4,6 +4,7 @@ const initialState = {
     Products: [],
     Product:{},
     categories:[],
+    minmax:[],
     pricerange:[0,10000],
     search:'',
     isLoading:false,
@@ -83,6 +84,16 @@ export const productSlice = createSlice({
             console.log("fullfill")
           state.isLoading=false;
           state.Products= action.payload
+
+          const minPrice = state.Products.reduce((min, product) => {
+            return product.price < min ? product.price : min;
+        }, state.Products[0].price);
+
+        const maxPrice = state.Products.reduce((max, product) => {
+            return product.price > max ? product.price : max;
+        }, state.Products[0].price);
+
+        state.minmax = [minPrice,maxPrice]
         }),
         builder.addCase(fetchProducts.rejected,(state,action)=>{
             console.log("error",action.payload)

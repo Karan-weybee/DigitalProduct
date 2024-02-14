@@ -69,7 +69,6 @@ const Content = () => {
     dispatch(fetchProducts());
   },[])
 
-
   useEffect(()=>{
     console.log("user",user)
   },[user])
@@ -82,7 +81,7 @@ const Content = () => {
     setIds(()=>[])
   }
   },[user])
-
+  
  const wishList = useSelector(state=>state.wishListSlice.wishList)
  console.log(wishList)
 
@@ -226,19 +225,13 @@ if(wishList.length>0){
                           </div>
                         </div>
                       </div>
-                    </div>
-                    
+                    </div>                    
                     )}</>
                     )}
                     </>)}
                     </>))
-                     
                     }
                    
-                    
-                    {/* <div className="product-type">
-                          <h5 className="-sale">-15%</h5>
-                        </div> */}
                   </div>
                 </div>
               </div>
