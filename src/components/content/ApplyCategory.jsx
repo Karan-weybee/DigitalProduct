@@ -10,6 +10,7 @@ const ApplyCategory = () => {
     const removeCategory=(tag)=>{
         console.log(tag)
         dispatch(removeCategories(tag))
+        
     }
     return (
         <div>

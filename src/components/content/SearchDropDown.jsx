@@ -2,15 +2,30 @@ import React,{useEffect, useState} from 'react';
 import Select from 'react-select';
 import { useDispatch,useSelector } from 'react-redux';
 import { fetchTags } from '../../slices/tagSlice';
+import { setCategories } from '../../slices/productSlice';
 
-const SearchDropDown = ({selectedOptions,setSelectedOptions}) => {
+const SearchDropDown = () => {
+    const [selectedOptions,setSelectedOptions]=useState([]);
   const dispatch = useDispatch();
+  const selectedtag = useSelector(state=>state.productSlice.categories);
+//   console.log(selectedtag)
+
+
   const [createValue,setCreateValue]=useState('')
   const [customOptions,setCustomOptions]=useState([]);
   const handleChange = (selectedOptions) => {
     console.log("hii")
-    setSelectedOptions(selectedOptions);
+    // setSelectedOptions(selectedOptions);
+    var tags = selectedOptions.map((option)=>option.value);
+    dispatch(setCategories(tags));
   };
+
+  useEffect(()=>{
+    if(selectedtag){
+        setSelectedOptions(()=>[])
+        selectedtag.map((tag)=>setSelectedOptions((option)=>[...option,{ value: tag, label: tag }]))
+    }
+  },[selectedtag])
 
   useEffect(()=>{
     dispatch(fetchTags());

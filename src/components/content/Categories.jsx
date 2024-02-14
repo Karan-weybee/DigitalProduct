@@ -1,6 +1,6 @@
 import React,{useEffect, useState} from 'react';
 import DropDownTag from '../Product/DropDownTag';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCategories } from '../../slices/productSlice';
 import '../../assets/css/priceRange.css'
 import PriceRangeSlider from './PriceRangeSlider';
@@ -9,12 +9,13 @@ import SearchDropDown from './SearchDropDown';
 const Categories = () => {
   
   const dispatch = useDispatch();
+  const selectedTag = useSelector(state=>state.productSlice.categories);
   const [selectedOptions, setSelectedOptions] = useState();
   
   useEffect(()=>{
     if(selectedOptions){
-    var tags = selectedOptions.map((option)=>option.value);
-    dispatch(setCategories(tags));
+    // var tags = selectedOptions.map((option)=>option.value);
+    // dispatch(setCategories(tags));
     }
   },[selectedOptions])
   
@@ -76,7 +77,7 @@ const Categories = () => {
                    
                     <div className="shop-sidebar__section__item">
                     {/* <DropDownTag selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/> */}
-                    <SearchDropDown selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/>
+                    <SearchDropDown/>
                      
                       {/* <h5>Brand</h5> */}
                       {/* <ul>
