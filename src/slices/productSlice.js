@@ -163,8 +163,6 @@ export const productSlice = createSlice({
 
 })
 
-
-
 export const {addFeatureImages,setCategories,removeCategories,applySearch,applyPriceRange} = productSlice.actions
 
 export default productSlice.reducer

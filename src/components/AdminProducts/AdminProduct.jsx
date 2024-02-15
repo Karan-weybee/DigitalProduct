@@ -5,6 +5,7 @@ import wrong from '../../assets/images/close-image.png'
 import { useSelector,useDispatch } from "react-redux";
 import { fetchProduct, fetchProducts, removeProduct } from "../../slices/productSlice";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const AdminProduct = () => {
     const user = useSelector(state=>state.userSlice.user);
@@ -47,12 +48,12 @@ const AdminProduct = () => {
               <div className="shop-header">
                 <div className="shop-header__view">
                   <div className="shop-header__view__icon" style={{display:'none'}}>
-                    <a className="active" href="#">
+                    <Link className="active" >
                       <i className="fas fa-th"></i>
-                    </a>
-                    <a href="#">
+                    </Link>
+                    <Link>
                       <i className="fas fa-bars"></i>
-                    </a>
+                    </Link>
                   </div>
                   <h5 className="shop-header__page" style={{marginLeft:'-11%'}}>
                    <button className="btn -light-green m-4" onClick={openAddProduct}> Add Product</button>
@@ -78,7 +79,7 @@ const AdminProduct = () => {
                           <h5 className="-new">New</h5>
                         </div>
                         <div className="product-thumb">
-                          <a
+                          <Link
                             className="product-thumb__image"
                           >
                             <img
@@ -89,23 +90,23 @@ const AdminProduct = () => {
                               src={product.productImage}
                               alt="Product image"
                             />
-                          </a>
+                          </Link>
                           <div className="product-thumb__actions">
                            
                             <div className="product-btn">
-                              <a
+                              <Link
                                 className="btn -white product__actions__item -round product-qv"
                                 onClick={()=>showProductDetails(product.id)}
                               >
                                 <i className="fas fa-pencil-alt "></i>
-                              </a>
+                              </Link>
                             </div>
                             <div className="product-btn ">
-                              <a
+                              <Link
                                 className="btn -white product__actions__item -round delete-btn"
                               >
                                 <i className="fas fa-trash-alt"></i>
-                              </a>
+                              </Link>
                               <div className="conformDelete">
                                 <p style={{fontWeight:'500'}}>Delete ?</p>
                                 <div style={{display:'flex',justifyContent:'center',gap:'5px'}}>
@@ -128,12 +129,11 @@ const AdminProduct = () => {
                               <i className="far fa-star"></i>
                             </div>
                           </div>
-                          <a
+                          <Link
                             className="product-name"
-                            href="/shop/product-detail.html"
                           >
                             {product.discription}
-                          </a>
+                          </Link>
                           <div className="product-content__footer">
                             <h5 className="product-price--main">${product.price}</h5>
                             <div className="product-colors">

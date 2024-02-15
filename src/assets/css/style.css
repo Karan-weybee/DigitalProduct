@@ -10806,4 +10806,6 @@ a.close-modal {
 .arrow + .conformDelete {
   display: block;
 }
-
+#temp-pdf{
+  display: none;
+}

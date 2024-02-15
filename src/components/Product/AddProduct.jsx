@@ -149,7 +149,6 @@ const AddProduct = () => {
                           accept="image/*"
                           onChange={handleImageChange} 
                         />
-                        
                       </div>
                       <div className="input-validator"  >
                       <label htmlFor="" style={{display:'block',marginBottom:'10px'}}>Featured images :</label>

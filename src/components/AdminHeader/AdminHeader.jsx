@@ -29,7 +29,8 @@ const AdminHeader = () => {
 
   const goToHome =()=>{
     dispatch(resetUserId())
-    nevigate('/')
+    nevigate('/');
+    dispatch(resetError)
   }
   return (
     <div className="menu -style-3">
@@ -47,37 +48,31 @@ const AdminHeader = () => {
                     <i className="fas fa-angle-down"></i>
                   </span>
                 </Link>
-               
               </li>
               <li>
-                <Link >Services</Link>
+                <Link>Services</Link>
               </li>
               <li>
-                <Link >About</Link>
+                <Link>About</Link>
               </li>
               <li>
                 <Link>
-                  Shop
-                 
+                Shop
                 </Link>
               </li>
               <li>
                 <Link>Blog</Link>
               </li>
-              
             </ul>
           </div>
           <div className="menu-functions -white">
             <Link className="menu-icon -search" onClick={showSearch}>
               <img
                 src="assets/images/header/search-icon-white.png"
-                alt="Search icon"
-              />
-              
+                alt="Search icon"/>
             </Link>
             <div className="search-box" id="search-box" style={{ height: "3em",width:'345px' }}>
               <form action="">
-            
                 <input
                   type="text"
                   placeholder="Search"
@@ -88,14 +83,11 @@ const AdminHeader = () => {
                 <button type="submit" style={{width:'70px'}} onClick={searchProduct}>
                   <img
                     src="assets/images/header/search-icon.png"
-                    alt="Search icon"
-                  />
+                    alt="Search icon"/>
                 </button>
                 <button type="submit" id="removeSearch" onClick={removeSearch}>X</button>
-             
               </form>
             </div>
-           
           </div>
         </div>
       </div>

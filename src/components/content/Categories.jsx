@@ -50,7 +50,6 @@ const Categories = () => {
                       />
                       <a
                         onClick={closeFilter}
-                        href="#close-modal"
                         rel="modal:close"
                         class="close-modal "
                         id="closeFilter"
@@ -64,7 +63,6 @@ const Categories = () => {
                     <div className="shop-sidebar__section__item">
                     {/* <DropDownTag selectedOptions={selectedOptions} setSelectedOptions={setSelectedOptions}/> */}
                     <SearchDropDown/>
-                     
                      
                     </div>
                     <div className="shop-sidebar__section__item">

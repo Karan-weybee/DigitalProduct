@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch,useSelector } from "react-redux";
 import { loginUser, setUserId, signUpUser } from "../slices/userSlice";
 import { fetchWishList } from "../slices/wishListSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginModal = () => {
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ const LoginModal = () => {
         <div className="product-quickview show">
           <div className="container">
             <div className="row">
-              <a
+              <Link
                 href="#close-modal"
                 rel="modal:close"
                 class="close-modal "
@@ -71,7 +71,7 @@ const LoginModal = () => {
                 onClick={closeLoginModal}
               >
                 Close
-              </a>
+              </Link>
               <div className="col-12 col-md-6 mx-auto">
                 <div className="cta__form">
                   <div

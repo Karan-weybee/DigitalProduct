@@ -49,8 +49,6 @@ const AdminModal = () => {
     }
   },[product])
 
-
-  
   console.log(featureImages)
   const [singleProductImage,setSingleProductImage]=useState('');
  

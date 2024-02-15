@@ -33,7 +33,7 @@ export const createPdf=(products)=>{
 .container-max.no-gutter {
   width: 100%;
   padding-right: 0px;
-  padding-left: 0px;
+  padding-left: 0px;                                
   margin-right: auto;
   margin-left: auto;
 }
@@ -7432,6 +7432,7 @@ template {
   opacity: 0;
 }
 .product-thumb {
+    height:'254px';
   position: relative;
   text-align: center;
   overflow: hidden;
@@ -7443,11 +7444,10 @@ template {
 }
 .product-thumb__image {
   display: block;
-  height: 100%;
   width: 100%;
 }
 .product-thumb__image img {
-  height: 100%;
+ 
   width: 100%;
   object-fit: cover;
 }

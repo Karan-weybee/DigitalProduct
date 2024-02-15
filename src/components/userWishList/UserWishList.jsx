@@ -52,7 +52,7 @@ const UserWishList = () => {
    const generatePdf = async () => {
     try {
     //   const htmlContent = divRef.current.innerHTML;
-
+    document.getElementById('temp-pdf').style.display = 'block';
     var products = []
     const product = wishproducts.map((product)=>products.push({Name : product.name,Image : product.productImage,Price : product.price,Discription:product.discription}))
     console.log(products)
@@ -81,6 +81,8 @@ const UserWishList = () => {
     URL.revokeObjectURL(blobUrl);
 
     dispatch(resetPdf())
+    
+    document.getElementById('temp-pdf').style.display = 'none';
     }
   },[pdf])
 
@@ -149,8 +151,10 @@ const UserWishList = () => {
                         </div> 
                       </div>
                       <Pagination/>
-                      <div className='download' style={{marginTop:'1em'}}>
-                        <button className='btn btn-light-success' style={{background:'green',color:'white'}} onClick={generatePdf}>Download</button>
+                      <div className='download' style={{marginTop:'1em',position:'relative'}}>
+                        <button id='pdf' className='btn btn-light-success' style={{background:'green',color:'white'}} onClick={generatePdf} >Download</button>
+                        <button id='temp-pdf' className='btn btn-light-info' style={{position:'absolute',top:'0%',zIndex:'3'}}  onClick={generatePdf} disabled>Download</button>
+                         
                       </div>
                     </div>
                     </div>
